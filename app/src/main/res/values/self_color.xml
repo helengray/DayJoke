@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_refresh_progress">@color/Grey_200</color>
+    <color name="color_refresh_loading">@color/Blue_Light_A700</color>
+</resources>
