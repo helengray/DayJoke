@@ -6,10 +6,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.helen.dayjoke.ui.application.DJApplication;
 
@@ -123,5 +127,17 @@ public class EnvironmentUtil {
 
     public static File getCacheFile(){
         return DJApplication.getInstance().getExternalCacheDir();
+    }
+
+    public static Point getScreenHW(){
+        WindowManager wm = (WindowManager) DJApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point outSize = new Point();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            display.getSize(outSize);
+        }else {
+            outSize.set(display.getWidth(),display.getHeight());
+        }
+        return outSize;
     }
 }

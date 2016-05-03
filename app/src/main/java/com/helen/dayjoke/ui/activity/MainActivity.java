@@ -42,8 +42,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(new JokeTextFragment(),"文本笑话");
-        pagerAdapter.addFragment(new JokePicFragment(),"图片笑话");
+        pagerAdapter.addFragment(new JokeTextFragment(),getString(R.string.joke_text));
+        pagerAdapter.addFragment(new JokePicFragment(),getString(R.string.joke_pic));
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);

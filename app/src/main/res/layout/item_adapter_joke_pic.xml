@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingLeft="@dimen/margin_left"
     android:paddingRight="@dimen/margin_left"
@@ -31,8 +32,13 @@
     </LinearLayout>
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/pic"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="5dp"
+        app:actualImageScaleType="centerCrop"
+        app:placeholderImage="@drawable/icon_smile_place"
+        app:placeholderImageScaleType="fitXY"
+        app:failureImage="@drawable/icon_loading_fail"
+        app:failureImageScaleType="fitXY"
         />
 </LinearLayout>

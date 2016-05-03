@@ -34,4 +34,14 @@
         <item name="android:textColor">@color/Grey_500</item>
         <item name="android:textSize">@dimen/font_12</item>
     </style>
+
+    <style name="gallery_dialog">
+        <item name="android:windowBackground">@color/Grey_1000</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@style/dialogWindowAnim</item>
+    </style>
+    <style name="dialogWindowAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
 </resources>

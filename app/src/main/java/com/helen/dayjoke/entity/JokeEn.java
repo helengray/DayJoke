@@ -1,8 +1,7 @@
 package com.helen.dayjoke.entity;
 
-import android.text.TextUtils;
-
 import com.google.gson.annotations.SerializedName;
+import com.helen.dayjoke.utils.TimeUtil;
 
 /**
  * Created by 李晓伟 on 2016/4/27.
@@ -29,10 +28,7 @@ public class JokeEn extends BaseEn{
     }
 
     public String getTime() {
-        if(!TextUtils.isEmpty(time)){
-            return time.split("\\.")[0];
-        }
-        return time;
+        return TimeUtil.format(time);
     }
 
     public void setTime(String time) {

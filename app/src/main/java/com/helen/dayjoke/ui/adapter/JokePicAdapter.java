@@ -12,6 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
 import com.helen.dayjoke.ui.view.EmptyEmbeddedContainer;
+import com.helen.dayjoke.ui.view.GalleryDialog;
 
 import java.util.List;
 
@@ -42,6 +43,19 @@ public class JokePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    private GalleryDialog mGalleryDialog;
+
+    private View.OnClickListener mClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(mGalleryDialog == null){
+                mGalleryDialog = new GalleryDialog(v.getContext());
+            }
+            String url = (String) v.getTag(R.id.pic);
+            mGalleryDialog.showGallery(Uri.parse(url));
+        }
+    };
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof JokeViewHolder){
@@ -50,6 +64,8 @@ public class JokePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             jokeViewHolder.mTextTitle.setText(jokeEn.getTitle());
             jokeViewHolder.mTextTime.setText(jokeEn.getTime());
             jokeViewHolder.mPic.setImageURI(Uri.parse(jokeEn.getImg()));
+            jokeViewHolder.mPic.setOnClickListener(mClickListener);
+            jokeViewHolder.mPic.setTag(R.id.pic,jokeEn.getImg());
         }else {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
             switch (status){
@@ -103,11 +119,13 @@ public class JokePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView mTextTitle;
         TextView mTextTime;
         SimpleDraweeView mPic;
+
         public JokeViewHolder(View itemView) {
             super(itemView);
             mTextTitle = (TextView) itemView.findViewById(R.id.text_title);
             mTextTime = (TextView) itemView.findViewById(R.id.text_time);
             mPic = (SimpleDraweeView) itemView.findViewById(R.id.pic);
+
         }
     }
 

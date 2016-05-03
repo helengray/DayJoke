@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +107,6 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onError(Throwable e) {
                 mRefreshLayout.setRefreshing(false);
-                System.out.println(Log.getStackTraceString(e));
                 if(mJokeEnList.isEmpty()){
                     mRefreshLayout.setEnabled(false);
                     mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_RETRY);
