@@ -202,7 +202,7 @@ public class GalleryDialog extends Dialog {
         // Get the directory for the user's public pictures directory.
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.mkdirs()) {
+        if (!file.exists() && !file.mkdirs()) {
 			FLog.e(TAG, "Directory not created");
         }
         return file;
