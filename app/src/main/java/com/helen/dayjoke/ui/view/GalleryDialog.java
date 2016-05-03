@@ -15,7 +15,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.binaryresource.FileBinaryResource;
 import com.facebook.cache.common.SimpleCacheKey;
@@ -33,6 +32,7 @@ import com.helen.dayjoke.ui.view.photodraweeview.OnViewTapListener;
 import com.helen.dayjoke.ui.view.photodraweeview.PhotoDraweeView;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.helen.dayjoke.utils.MD5;
+import com.helen.dayjoke.utils.ToastUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +40,11 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -113,7 +118,7 @@ public class GalleryDialog extends Dialog {
 			mViewPager.setCurrentItem(position>0?position:0);
 			super.show();
 		} catch (Exception e) {
-			FLog.e(TAG, e, ">>>>>>>>>> showGallery() <<<<<<<<<<");
+			//do nothing
 		}
 
 	}
@@ -138,32 +143,57 @@ public class GalleryDialog extends Dialog {
 	private void onSave(){
 		if (!android.os.Environment.getExternalStorageState().equals(
 				android.os.Environment.MEDIA_MOUNTED)) {
-			Toast.makeText(getContext(), "SD卡不可用",Toast.LENGTH_SHORT).show();
-		} else {
-			Uri uri = mImageUris.get(mViewPager.getCurrentItem());
-			String scheme = uri.toString();//getScheme();
-			if(!TextUtils.isEmpty(scheme)){
-				File file = null;
-				if (scheme.startsWith("http")) {
-					FileBinaryResource resource = (FileBinaryResource) Fresco.getImagePipelineFactory().getMainFileCache().getResource(new SimpleCacheKey(scheme));
-					if(resource != null) {
-						file = resource.getFile();
-					}
-				} else {
-					String pathString = uri.toString().replace("file://", "");
-					file = new File(pathString);
-				}
-				if(file==null) {
-					Toast.makeText(getContext(), "文件不存在，保存失败",Toast.LENGTH_SHORT).show();
-					return;
-				}
-				String savePathString = getAlbumStorageDir("dayjoke").getAbsolutePath();
-				String md5 = MD5.toMd5(scheme);
-				String type=".jpg";
-				copySdcardFile(file.toString(), savePathString + File.separator + md5 + type);
-				notifyImageLibraryUpdate(getContext(), savePathString+ File.separator+md5+type);
-			}
+			ToastUtil.showToast(getContext(), R.string.sd_no_exist);
+			return;
 		}
+		Uri uri = mImageUris.get(mViewPager.getCurrentItem());
+		Observable.just(uri)
+				.map(new Func1<Uri, File>() {
+					@Override
+					public File call(Uri uri) {
+						String scheme = uri.toString();
+						if (!TextUtils.isEmpty(scheme)) {
+							File file = null;
+							if (scheme.startsWith("http")) {
+								FileBinaryResource resource = (FileBinaryResource) Fresco.getImagePipelineFactory().getMainFileCache().getResource(new SimpleCacheKey(scheme));
+								if (resource != null) {
+									file = resource.getFile();
+								}
+							} else {
+								String pathString = uri.toString().replace("file://", "");
+								file = new File(pathString);
+							}
+							return file;
+						}
+						return null;
+					}
+				})
+				.subscribeOn(Schedulers.io())
+				.observeOn(Schedulers.io())
+				.subscribe(new Subscriber<File>() {
+					@Override
+					public void onCompleted() {
+
+					}
+
+					@Override
+					public void onError(Throwable e) {
+						ToastUtil.showToast(getContext(), R.string.save_fail);
+					}
+
+					@Override
+					public void onNext(File file) {
+						if (file != null) {
+							String savePathString = getAlbumStorageDir("dayjoke").getAbsolutePath();
+							String md5 = MD5.toMd5(file.getName());
+							String type = ".jpg";
+							copySdcardFile(file.toString(), savePathString + File.separator + md5 + type);
+							notifyImageLibraryUpdate(getContext(), savePathString + File.separator + md5 + type);
+						} else {
+							ToastUtil.showToast(getContext(),R.string.file_no_exist_save_fail);
+						}
+					}
+				});
 	}
 
 	//文件拷贝
@@ -172,7 +202,7 @@ public class GalleryDialog extends Dialog {
 		try {
 			File file2File = new File(toFile);
 			if (file2File.exists()) {
-				Toast.makeText(getContext(), "保存成功",Toast.LENGTH_SHORT).show();
+				ToastUtil.showToast(getContext(), R.string.save_success);
 				return 0;
 			}
 			if (!file2File.getParentFile().exists()) {
@@ -188,11 +218,11 @@ public class GalleryDialog extends Dialog {
 			fosto.flush();
 			fosfrom.close();
 			fosto.close();
-			Toast.makeText(getContext(), "保存成功",Toast.LENGTH_SHORT).show();
+			ToastUtil.showToast(getContext(), R.string.save_success);
 			return 0;
 
 		} catch (Exception ex) {
-			Toast.makeText(getContext(), "保存失败",Toast.LENGTH_SHORT).show();
+			ToastUtil.showToast(getContext(), R.string.save_fail);
 			return -1;
 		}
 	}

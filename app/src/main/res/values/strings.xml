@@ -9,10 +9,14 @@
 
     <string name="action_settings">Settings</string>
     <string name="quit">再按一次退出程序</string>
-    <string name="error_quit">很抱歉，程序出现错误，即将退出...</string>
+    <string name="error_quit">很抱歉，程序出现错误，即将退出…</string>
     <string name="joke_text">文本笑话</string>
     <string name="joke_pic">图片笑话</string>
     <string name="save_image">保存图片</string>
+    <string name="sd_no_exist">SD卡不可用</string>
+    <string name="file_no_exist_save_fail">文件不存在，保存失败</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_fail">保存失败</string>
 
 
 </resources>
