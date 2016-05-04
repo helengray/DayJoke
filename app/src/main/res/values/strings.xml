@@ -17,6 +17,18 @@
     <string name="file_no_exist_save_fail">文件不存在，保存失败</string>
     <string name="save_success">保存成功</string>
     <string name="save_fail">保存失败</string>
+    <string name="today_fortune">今日运势</string>
+    <string name="composite_index">综合指数</string>
+    <string name="health_index">健康指数</string>
+    <string name="love_index">爱情指数</string>
+    <string name="lucky_color">幸运颜色</string>
+    <string name="work_index">工作指数</string>
+    <string name="lucky_num">幸运数字</string>
+    <string name="wealth_index">财运指数</string>
+    <string name="match_friends">速配Q友</string>
+    <string name="system">系统</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
 
 
 </resources>

@@ -5,6 +5,8 @@ package com.helen.dayjoke.entity;
  *
  */
 public class ConstellationEn extends BaseEn{
+    public static final int START = 5;
+
     public static final String TYPE_TODAY = "today";
     public static final String TYPE_TOMORROW = "tomorrow";
     public static final String TYPE_WEEK = "week";
@@ -58,6 +60,15 @@ public class ConstellationEn extends BaseEn{
         this.all = all;
     }
 
+    public float getAllFormat(){
+        try {
+            return Float.parseFloat(all.replace("%",""))*0.01f*START;
+        }catch (Exception e){
+            //
+        }
+        return 0f;
+    }
+
     public String getColor() {
         return color;
     }
@@ -90,12 +101,30 @@ public class ConstellationEn extends BaseEn{
         this.love = love;
     }
 
+    public float getLoveFormat(){
+        try {
+            return Float.parseFloat(love.replace("%",""))*0.01f*START;
+        }catch (Exception e){
+            //
+        }
+        return 0f;
+    }
+
     public String getMoney() {
         return money;
     }
 
     public void setMoney(String money) {
         this.money = money;
+    }
+
+    public float getMoneyFormat(){
+        try {
+            return Float.parseFloat(money.replace("%",""))*0.01f*START;
+        }catch (Exception e){
+            //
+        }
+        return 0f;
     }
 
     public String getNumber() {
@@ -120,6 +149,15 @@ public class ConstellationEn extends BaseEn{
 
     public void setWork(String work) {
         this.work = work;
+    }
+
+    public float getWorkFormat(){
+        try {
+            return Float.parseFloat(work.replace("%",""))*0.01f*START;
+        }catch (Exception e){
+            //
+        }
+        return 0f;
     }
 
     public String getResultcode() {
