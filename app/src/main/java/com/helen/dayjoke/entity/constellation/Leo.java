@@ -1,12 +1,13 @@
-package com.helen.dayjoke.entity;
+package com.helen.dayjoke.entity.constellation;
 
 import com.helen.dayjoke.R;
+import com.helen.dayjoke.entity.constellation.Constellation;
 
 /**
  * Created by 李晓伟 on 2016/5/4.
  * 狮子座
  */
-public class Leo extends Constellation{
+public class Leo extends Constellation {
     @Override
     public String getName() {
         return "狮子座";

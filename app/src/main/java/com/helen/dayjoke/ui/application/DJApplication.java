@@ -3,7 +3,6 @@ package com.helen.dayjoke.ui.application;
 import android.app.Application;
 
 import com.facebook.cache.disk.DiskCacheConfig;
-import com.facebook.common.util.ByteConstants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.helen.dayjoke.utils.EnvironmentUtil;
@@ -32,10 +31,10 @@ public class DJApplication extends Application{
     private void initFresco(){
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(this)
                 .setBaseDirectoryPath(EnvironmentUtil.getCacheFile())
-                .setBaseDirectoryName(EnvironmentUtil.CACHE_IMAGE)
-                .setMaxCacheSize(100 * ByteConstants.MB)
-                .setMaxCacheSizeOnLowDiskSpace(10 * ByteConstants.MB)
-                .setMaxCacheSizeOnVeryLowDiskSpace(2 * ByteConstants.MB)
+                .setBaseDirectoryName(Constant.CACHE_IMAGE)
+                .setMaxCacheSize(Constant.MAX_CACHE_SIZE)
+                .setMaxCacheSizeOnLowDiskSpace(Constant.LOW_CACHE_SIZE)
+                .setMaxCacheSizeOnVeryLowDiskSpace(Constant.VERY_LOW_CACHE_SIZE)
                 .build();
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
                 .setMainDiskCacheConfig(diskCacheConfig).build();

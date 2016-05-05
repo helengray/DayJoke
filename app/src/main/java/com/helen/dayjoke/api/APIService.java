@@ -15,14 +15,15 @@ import rx.Observable;
 public interface APIService {
     String BASE_URL = "http://apis.baidu.com/";
 
-    @Headers({"Cache-Control: public, max-age=3600","apikey:cd3546573f9f857c77f603aaa5f004f2"})
+    @Headers({"Cache-Control: public, max-age=3600"})
     @GET("showapi_open_bus/showapi_joke/joke_text")
     Observable<ResponseEn> getTextJoke(@Query("page") String page);
 
-    @Headers("Cache-Control: public, max-age=3600")
+    @Headers("Cache-Control: public, max-age=3600")//1小时
     @GET("showapi_open_bus/showapi_joke/joke_pic")
     Observable<ResponseEn> getPicJoke(@Query("page") String page);
 
+    @Headers("Cache-Control: public, max-age=43200")//12小时
     @GET("bbtapi/constellation/constellation_query")
     Observable<ConstellationEn> getConstellation(@Query("consName") String consName,@Query("type") String type);
 }

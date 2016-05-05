@@ -28,6 +28,7 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.helen.dayjoke.R;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.photodraweeview.OnViewTapListener;
 import com.helen.dayjoke.ui.view.photodraweeview.PhotoDraweeView;
 import com.helen.dayjoke.utils.EnvironmentUtil;
@@ -184,7 +185,7 @@ public class GalleryDialog extends Dialog {
 					@Override
 					public void onNext(File file) {
 						if (file != null) {
-							String savePathString = getAlbumStorageDir("dayjoke").getAbsolutePath();
+							String savePathString = getAlbumStorageDir(Constant.IMAGE_SAVE_PATH).getAbsolutePath();
 							String md5 = MD5.toMd5(file.getName());
 							String type = ".jpg";
 							copySdcardFile(file.toString(), savePathString + File.separator + md5 + type);

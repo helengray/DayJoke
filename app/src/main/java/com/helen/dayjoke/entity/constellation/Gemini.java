@@ -1,12 +1,13 @@
-package com.helen.dayjoke.entity;
+package com.helen.dayjoke.entity.constellation;
 
 import com.helen.dayjoke.R;
+import com.helen.dayjoke.entity.constellation.Constellation;
 
 /**
  * Created by 李晓伟 on 2016/5/4.
  * 双子座
  */
-public class Gemini extends Constellation{
+public class Gemini extends Constellation {
     @Override
     public String getName() {
         return "双子座";

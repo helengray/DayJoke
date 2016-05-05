@@ -25,8 +25,6 @@ import java.util.List;
  * 系统环境Util
  */
 public class EnvironmentUtil {
-    public static final String CACHE_HTTP = "network_cache";
-    public static final String CACHE_IMAGE = "image_cache";
 
     /**
      *

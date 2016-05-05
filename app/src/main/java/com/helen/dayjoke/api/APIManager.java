@@ -2,6 +2,7 @@ package com.helen.dayjoke.api;
 
 import com.helen.dayjoke.api.interceptor.LogInterceptor;
 import com.helen.dayjoke.api.interceptor.NetworkInterceptor;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 
 import java.io.File;
@@ -19,11 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIManager {
     private Retrofit retrofit;
     private APIManager(){
-        File cacheFile = new File(EnvironmentUtil.getCacheFile(), EnvironmentUtil.CACHE_HTTP);
+        File cacheFile = new File(EnvironmentUtil.getCacheFile(), Constant.CACHE_HTTP);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .addNetworkInterceptor(new NetworkInterceptor())
                 .addNetworkInterceptor(new LogInterceptor())
-                .cache(new Cache(cacheFile,1024 * 1024 * 50))
+                .cache(new Cache(cacheFile, Constant.MAX_CACHE_SIZE))
                 .build();
         retrofit = new Retrofit.Builder()
                 .baseUrl(APIService.BASE_URL)

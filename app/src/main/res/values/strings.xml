@@ -29,6 +29,9 @@
     <string name="system">系统</string>
     <string name="setting">设置</string>
     <string name="about">关于</string>
+    <string name="your_constellation">你的星座：</string>
+    <string name="clear_cache">清理缓存(%sM)</string>
+    <string name="feedback">反馈</string>
 
 
 </resources>

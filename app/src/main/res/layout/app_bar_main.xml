@@ -18,6 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:logo="@mipmap/ic_launcher"
+            app:title="@string/app_name"
             app:logoDescription="@string/app_name"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
@@ -30,7 +31,6 @@
             >
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
-    <!--<include layout="@layout/content_main" />-->
     <android.support.v4.view.ViewPager
         android:id="@+id/joke_view_pager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

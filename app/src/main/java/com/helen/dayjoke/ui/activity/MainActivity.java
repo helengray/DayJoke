@@ -1,5 +1,6 @@
 package com.helen.dayjoke.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,12 +19,13 @@ import android.widget.Toast;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.api.APIManager;
 import com.helen.dayjoke.api.APIService;
-import com.helen.dayjoke.entity.Constellation;
 import com.helen.dayjoke.entity.ConstellationEn;
-import com.helen.dayjoke.entity.Gemini;
+import com.helen.dayjoke.entity.constellation.Constellation;
 import com.helen.dayjoke.ui.adapter.JokePagerAdapter;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.fragment.JokePicFragment;
 import com.helen.dayjoke.ui.fragment.JokeTextFragment;
+import com.helen.dayjoke.utils.SPUtil;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,6 +47,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView mTextViewLuckyNum;
     private RatingBar mRatingBarWealth;
     private TextView mTextViewMatchFriends;
+
+    private int mConsIndex = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +63,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         initJokeView();
@@ -102,7 +106,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mRatingBarWealth = (RatingBar) view.findViewById(R.id.rating_wealth_index);
         mTextViewMatchFriends = (TextView) view.findViewById(R.id.text_match_friends);
 
-        initConsData(new Gemini());
+        mConsIndex = SPUtil.getInstance().getInt(Constant.KEY_CONSTELLATION_INDEX,0);
+        initConsData(Constellation.CONSTELLATIONS[mConsIndex]);
     }
 
     private APIService mAPIService;
@@ -183,11 +188,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if(id == R.id.nav_about){
             //
         }else if(id == R.id.nav_setting){
-            //
+            SettingActivity.launcher(this, Constant.REQ_CODE_CONS_CHANGE);
         }
-
-        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == Constant.REQ_CODE_CONS_CHANGE){
+                int index = SPUtil.getInstance().getInt(Constant.KEY_CONSTELLATION_INDEX,0);
+                if(index != mConsIndex){
+                    mConsIndex = index;
+                    initConsData(Constellation.CONSTELLATIONS[index]);
+                }
+            }
+        }
+    }
 }

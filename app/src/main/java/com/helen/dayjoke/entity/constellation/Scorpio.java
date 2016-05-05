@@ -1,20 +1,21 @@
-package com.helen.dayjoke.entity;
+package com.helen.dayjoke.entity.constellation;
 
 import com.helen.dayjoke.R;
+import com.helen.dayjoke.entity.constellation.Constellation;
 
 /**
  * Created by 李晓伟 on 2016/5/4.
- * 摩羯座
+ * 天蝎座
  */
-public class Capricorn extends Constellation{
+public class Scorpio extends Constellation {
     @Override
     public String getName() {
-        return "摩羯座";
+        return "天蝎座";
     }
 
     @Override
     public String getDate() {
-        return "12/22-1/19";
+        return "10/24-11/22";
     }
 
     @Override
