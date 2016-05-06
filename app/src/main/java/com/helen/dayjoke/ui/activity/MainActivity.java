@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.api.APIManager;
@@ -26,6 +25,7 @@ import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.fragment.JokePicFragment;
 import com.helen.dayjoke.ui.fragment.JokeTextFragment;
 import com.helen.dayjoke.utils.SPUtil;
+import com.helen.dayjoke.utils.ToastUtil;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private long exitTime = 0;
     public void quit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(getApplicationContext(), R.string.quit, Toast.LENGTH_SHORT).show();
+            ToastUtil.showToast(this, R.string.quit);
             exitTime = System.currentTimeMillis();
         } else {
             super.onBackPressed();
@@ -182,17 +182,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if(id == R.id.nav_about){
-            //
+            AboutActivity.launcher(this);
         }else if(id == R.id.nav_setting){
             SettingActivity.launcher(this, Constant.REQ_CODE_CONS_CHANGE);
         }else if(id == R.id.nav_feedback){
             FeedBackActivity.launcher(this);
-            mDrawerLayout.closeDrawer(GravityCompat.START);
         }
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

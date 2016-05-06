@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/Pink_A200</color>
+    <color name="colorPrimaryDark">@color/Pink_A200</color>
+    <color name="colorAccent">@color/Blue_Light_400</color>
 
     <!--RED 红色-->
     <color name="Red_50">#fde0dc</color>

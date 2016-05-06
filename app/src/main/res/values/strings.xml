@@ -40,6 +40,14 @@
     <string name="hint_upload_log">上传程序错误日志,帮助我改进吧。</string>
     <string name="send">发送</string>
     <string name="thanks_to_feedback">提交成功,感谢您的建议!</string>
-
-
+    <string name="about_me">关于我:\n
+        \n\t\t一个喜欢看狗血韩剧、科幻美剧、清新日剧的码农。\n
+        \n\t\tGithub:https://github.com/helengray \n
+        \n\t\tCSDN:http://blog.csdn.net/it_talk \n
+        \n\t\t微博:划虎烂1990 \n</string>
+    <string name="share_soft">分享软件</string>
+    <string name="open_source">开放源代码许可</string>
+    <string name="check_update">检测更新</string>
+    <string name="new_version">最新版本</string>
+    <string name="v">V%s</string>
 </resources>

@@ -35,7 +35,8 @@ public class TitlebarActivity extends BaseActivity{
         mToolbar = (Toolbar) titleView.findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         RelativeLayout layoutContent = (RelativeLayout) titleView.findViewById(R.id.layout_content);
-        layoutContent.addView(view);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
+        layoutContent.addView(view,params);
 
         super.setContentView(titleView);
     }

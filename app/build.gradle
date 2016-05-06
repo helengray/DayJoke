@@ -50,4 +50,5 @@ dependencies {
     // For WebP support, without animations
     //compile 'com.facebook.fresco:webpsupport:0.10.0'
     compile 'com.jaredrummler:material-spinner:1.0.6'
+    compile 'com.github.traex.rippleeffect:library:1.3'
 }

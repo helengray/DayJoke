@@ -4,6 +4,9 @@ import com.helen.dayjoke.entity.BaseEn;
 import com.helen.dayjoke.entity.ConstellationEn;
 import com.helen.dayjoke.entity.FileBodyEn;
 import com.helen.dayjoke.entity.ResponseEn;
+import com.helen.dayjoke.entity.VersionInfo;
+
+import java.util.ArrayList;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -39,4 +42,7 @@ public interface APIService {
 
     @POST("https://api.bmob.cn/1/classes/{tableName}")
     Observable<BaseEn> postFeedback(@Path("tableName") String simpleClassName, @Body RequestBody feedBack);
+
+    @GET("https://api.bmob.cn/1/classes/VersionInfo")
+    Observable<ArrayList<VersionInfo>> getVersionInfo(@Query("bql") String bql);
 }
