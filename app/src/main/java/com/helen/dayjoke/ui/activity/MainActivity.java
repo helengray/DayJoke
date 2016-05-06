@@ -189,6 +189,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             //
         }else if(id == R.id.nav_setting){
             SettingActivity.launcher(this, Constant.REQ_CODE_CONS_CHANGE);
+        }else if(id == R.id.nav_feedback){
+            FeedBackActivity.launcher(this);
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         }
         return true;
     }

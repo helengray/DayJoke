@@ -1,11 +1,8 @@
 package com.helen.dayjoke.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,12 +24,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class SettingActivity extends BaseActivity implements View.OnClickListener{
-
-
-    public static void launcher(Context context){
-        context.startActivity(new Intent(context,SettingActivity.class));
-    }
+public class SettingActivity extends TitlebarActivity implements View.OnClickListener{
 
     public static void launcher(BaseActivity context,int requestCode){
         context.startActivityForResult(new Intent(context,SettingActivity.class),requestCode);
@@ -44,8 +36,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setTitle(R.string.setting);
         initView();
     }
 
@@ -115,17 +106,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 });
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
-            setResultBack();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onClick(final View v) {
         switch (v.getId()){
@@ -148,12 +128,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                             @Override
                             public void onError(Throwable e) {
-                                Snackbar.make(v,"清理过程出现异常",Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(v, R.string.clear_cache_error,Snackbar.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onNext(Boolean b) {
-                                Snackbar.make(v,"清理完成",Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(v, R.string.clear_done,Snackbar.LENGTH_LONG).show();
                             }
                         });
                 break;

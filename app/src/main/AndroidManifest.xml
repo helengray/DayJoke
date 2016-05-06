@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".ui.application.DJApplication"
@@ -29,6 +30,12 @@
             android:screenOrientation="portrait"
             android:name=".ui.activity.SettingActivity"
             android:label="@string/setting"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.activity.FeedBackActivity"
+            android:label="@string/title_feedback"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

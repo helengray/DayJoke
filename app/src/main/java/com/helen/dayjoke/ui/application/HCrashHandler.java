@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.ui.activity.BaseActivity;
+import com.helen.dayjoke.utils.EnvironmentUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +20,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,9 +32,6 @@ import java.util.Map;
  * 全局异常捕捉
  */
 public class HCrashHandler implements Thread.UncaughtExceptionHandler {
-    private static final String LOG_FILE_NAME = "AppCrash.log";
-    private static final int LOG_MAX_SIZE = 1024 * 1024;//1M
-
     private static HCrashHandler INSTANCE;
     private Context mContext;
     private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -167,7 +166,7 @@ public class HCrashHandler implements Thread.UncaughtExceptionHandler {
         for(Map.Entry<String,String> entry:mDeviceInfos.entrySet()){
             String key=entry.getKey();
             String value=entry.getValue();
-            sb.append(key +"："+value);
+            sb.append(key +" : "+value);
             sb.append(System.getProperty("line.separator"));
         }
         //打印错误信息
@@ -183,16 +182,16 @@ public class HCrashHandler implements Thread.UncaughtExceptionHandler {
                 if(!dir.exists()){
                     dir.mkdirs();
                 }
-                fileName=dirPath + LOG_FILE_NAME;
+                fileName=dirPath + Constant.LOG_FILE_NAME;
                 File file = new File(fileName);
                 if(!file.exists()){
                     file.createNewFile();
-                }else if(file.length() > LOG_MAX_SIZE){//如果超过最大文件大小，则重新创建一个文件
+                }else if(file.length() > Constant.LOG_MAX_SIZE){//如果超过最大文件大小，则重新创建一个文件
                     file.delete();
                     file.createNewFile();
                 }
                 fos = new FileOutputStream(file,true);
-                fos.write(sb.toString().getBytes());
+                fos.write(sb.toString().getBytes(Charset.forName("UTF-8")));
                 fos.flush();
             }
             return fileName;
@@ -211,6 +210,6 @@ public class HCrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     protected String getLogDir(){
-        return DJApplication.getInstance().getExternalCacheDir() + File.separator + "crash/";
+        return EnvironmentUtil.getCacheFile() + File.separator + Constant.CACHE_LOG + File.separator;
     }
 }

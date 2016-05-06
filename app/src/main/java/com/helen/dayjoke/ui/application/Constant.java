@@ -2,6 +2,8 @@ package com.helen.dayjoke.ui.application;
 
 import com.facebook.common.util.ByteConstants;
 
+import okhttp3.MediaType;
+
 /**
  * Created by 李晓伟 on 2016/5/5.
  *
@@ -13,10 +15,21 @@ public class Constant {
     public static final String CACHE_IMAGE = "image_cache";
     /**图片保存文件夹-系统文件夹Pictures下*/
     public static final String IMAGE_SAVE_PATH = "dayjoke";
+    /**崩溃日志文件夹*/
+    public static final String CACHE_LOG = "crash";
+    /**崩溃文件名称*/
+    public static final String LOG_FILE_NAME = "AppCrash.log";
+    /**日志文件最大大小*/
+    public static final int LOG_MAX_SIZE = ByteConstants.MB;//1M
+
     public static final long MAX_CACHE_SIZE = 100 * ByteConstants.MB;
     public static final long LOW_CACHE_SIZE = 50 * ByteConstants.MB;
     public static final long VERY_LOW_CACHE_SIZE = 10 * ByteConstants.MB;
     public static final int REQ_CODE_CONS_CHANGE = 1000;
     /**保存星座索引的key*/
     public static final String KEY_CONSTELLATION_INDEX = "KEY_CONSTELLATION_INDEX";
+    /**RequestBody 文本格式*/
+    public static final MediaType TEXT = MediaType.parse("text/plain");
+    /**RequestBody Json格式*/
+    public static final MediaType JSON = MediaType.parse("application/json");
 }

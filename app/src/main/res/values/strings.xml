@@ -32,6 +32,14 @@
     <string name="your_constellation">你的星座：</string>
     <string name="clear_cache">清理缓存(%sM)</string>
     <string name="feedback">反馈</string>
+    <string name="clear_cache_error">清理过程出现异常</string>
+    <string name="clear_done">清理完成</string>
+    <string name="title_feedback">建议反馈</string>
+    <string name="hint_input_feedback">请输入您的反馈意见</string>
+    <string name="hint_input_contact">请留下您的联系方式(如QQ),方便我联系您!</string>
+    <string name="hint_upload_log">上传程序错误日志,帮助我改进吧。</string>
+    <string name="send">发送</string>
+    <string name="thanks_to_feedback">提交成功,感谢您的建议!</string>
 
 
 </resources>
