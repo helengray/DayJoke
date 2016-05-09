@@ -43,6 +43,7 @@
             android:label="@string/about"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <service android:name=".ui.service.DownloadService"/>
     </application>
 
 </manifest>

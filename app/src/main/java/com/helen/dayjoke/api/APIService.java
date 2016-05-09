@@ -4,11 +4,10 @@ import com.helen.dayjoke.entity.BaseEn;
 import com.helen.dayjoke.entity.ConstellationEn;
 import com.helen.dayjoke.entity.FileBodyEn;
 import com.helen.dayjoke.entity.ResponseEn;
-import com.helen.dayjoke.entity.VersionInfo;
-
-import java.util.ArrayList;
+import com.helen.dayjoke.entity.constellation.VersionInfoResponseEn;
 
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -44,5 +43,8 @@ public interface APIService {
     Observable<BaseEn> postFeedback(@Path("tableName") String simpleClassName, @Body RequestBody feedBack);
 
     @GET("https://api.bmob.cn/1/classes/VersionInfo")
-    Observable<ArrayList<VersionInfo>> getVersionInfo(@Query("bql") String bql);
+    Observable<VersionInfoResponseEn> getVersionInfo(@Query("limit") int limit, @Query("order") String bql);
+
+    @GET("//{url}")
+    Call<RequestBody> downloadAPK(@Path("url") String url);
 }

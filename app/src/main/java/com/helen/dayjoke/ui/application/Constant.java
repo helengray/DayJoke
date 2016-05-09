@@ -19,6 +19,10 @@ public class Constant {
     public static final String CACHE_LOG = "crash";
     /**崩溃文件名称*/
     public static final String LOG_FILE_NAME = "AppCrash.log";
+    /**apk文件*/
+    public static final String DOWNLOAD_APK_FILE = "apk";
+    /**apk文件*/
+    public static final String DOWNLOAD_APK_NAME = "dayjoke.apk";
     /**日志文件最大大小*/
     public static final int LOG_MAX_SIZE = ByteConstants.MB;//1M
 

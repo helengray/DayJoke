@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="@string/new_version"
+                android:visibility="gone"
                 />
         </LinearLayout>
 

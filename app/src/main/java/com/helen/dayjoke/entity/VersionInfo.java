@@ -27,6 +27,9 @@ public class VersionInfo extends BaseEn{
     }
 
     public String getUpdateContent() {
+        if(updateContent == null){
+            return "";
+        }
         return updateContent;
     }
 
@@ -40,5 +43,15 @@ public class VersionInfo extends BaseEn{
 
     public void setApkFile(BmobFile apkFile) {
         this.apkFile = apkFile;
+    }
+
+    @Override
+    public String toString() {
+        return "VersionInfo{" +
+                "objectId='" + objectId + '\'' +
+                ", version='" + version + '\'' +
+                ", updateContent='" + updateContent + '\'' +
+                ", apkFile=" + apkFile +
+                '}';
     }
 }

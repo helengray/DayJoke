@@ -18,4 +18,9 @@
     <dimen name="font_14">14sp</dimen>
     <dimen name="font_16">16sp</dimen>
     <dimen name="font_20">20sp</dimen>
+
+    <dimen name="action_button_height">32dp</dimen>
+    <dimen name="action_button_text_size">14sp</dimen>
+    <dimen name="action_button_min_width">56dp</dimen>
+    <dimen name="action_button_padding_horizontal">4dp</dimen>
 </resources>
