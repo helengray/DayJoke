@@ -64,4 +64,7 @@
         <item name="android:textSize">@dimen/action_button_text_size</item>
     </style>
 
+    <style name="RatingBarTheme" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
 </resources>

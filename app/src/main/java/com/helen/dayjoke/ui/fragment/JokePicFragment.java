@@ -167,6 +167,7 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void doRetry() {
+        mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_LOADING);
         requestData();
     }
 }
