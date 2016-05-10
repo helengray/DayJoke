@@ -155,7 +155,7 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
                 materialDialog.show();
                 break;
             case R.id.layout_open_source:
-
+                OpenSourceActivity.launcher(this);
                 break;
             case R.id.layout_share:
                 shareIntent(this,getString(R.string.app_name),"愿你每一天都快快乐乐，每天看到你的笑容是我最大的幸福！快来下载吧！"+mVersionInfo.getApkFile().getUrl());

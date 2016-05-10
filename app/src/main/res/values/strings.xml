@@ -56,4 +56,37 @@
     <string name="alert">提示</string>
     <string name="sure">更新</string>
     <string name="cancel">取消</string>
+    <string name="open_source_content">
+        \n
+        ------------------\n
+        每日一笑\n
+        ------------------\n
+        https://github.com/helengray/DayJoke\n\n
+        ------------------\n
+        Fresco \t0.10.0\n
+        ------------------\n
+        https://github.com/facebook/fresco\n\n
+        ------------------\n
+        RxJava \t1.1.0\n
+        ------------------\n
+        https://github.com/ReactiveX/RxJava\n
+        https://github.com/ReactiveX/RxAndroid\n\n
+        ------------------\n
+        retrofit \t2.0.1\n
+        ------------------\n
+        https://github.com/square/retrofit\n\n
+        ------------------\n
+        RippleEffect \t1.3\n
+        ------------------\n
+        https://github.com/traex/RippleEffect\n\n
+        ------------------\n
+        material-spinner \t1.0.6\n
+        ------------------\n
+        https://github.com/jaredrummler/Material-Spinner\n\n
+        ------------------\n
+        Bomb\n
+        ------------------\n
+        http://www.bmob.cn\n\n
+
+    </string>
 </resources>

@@ -67,4 +67,10 @@
     <style name="RatingBarTheme" parent="Widget.AppCompat.RatingBar.Small">
         <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="RippleViewStyle">
+        <item name="rv_centered">false</item>
+        <item name="rv_color">@color/Blue_Grey_300</item>
+        <item name="rv_rippleDuration">500</item>
+    </style>
 </resources>

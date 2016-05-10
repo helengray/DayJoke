@@ -40,8 +40,7 @@
     <com.andexert.library.RippleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rv_centered="false"
-        app:rv_rippleDuration="500"
+        style="@style/RippleViewStyle"
         >
     <Button
         android:id="@+id/btn_send"

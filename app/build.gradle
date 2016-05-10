@@ -38,7 +38,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
-    compile 'com.squareup.retrofit2:converter-scalars:2.0.0'
+    //compile 'com.squareup.retrofit2:converter-scalars:2.0.0'
     //fresco
     compile 'com.facebook.fresco:fresco:0.10.0'
     // If your app supports Android versions before Ice Cream Sandwich (API level 14)
