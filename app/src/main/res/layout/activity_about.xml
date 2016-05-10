@@ -16,7 +16,7 @@
             style="@style/TitleStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:drawableTop="@mipmap/ic_launcher"
             android:gravity="center"
             android:padding="10dp"
@@ -29,6 +29,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="V1.0.0"
+            />
+
+        <ImageView
+            android:id="@+id/iv_zhifubao"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/icon_zhifubao"
             />
 
         <TextView

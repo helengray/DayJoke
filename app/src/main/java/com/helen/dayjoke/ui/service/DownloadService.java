@@ -12,6 +12,7 @@ import android.os.IBinder;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.ui.application.Constant;
+import com.helen.dayjoke.utils.EnvironmentUtil;
 
 import java.io.File;
 
@@ -41,7 +42,7 @@ public class DownloadService extends Service{
                     if(enqueue == id){
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/download/"+Constant.DOWNLOAD_APK_NAME)),
+                        intent.setDataAndType(Uri.fromFile(new File(EnvironmentUtil.getDownloadFile(),Constant.DOWNLOAD_APK_NAME)),
                                 "application/vnd.android.package-archive");
                         startActivity(intent);
                         stopSelf();

@@ -2,7 +2,10 @@ package com.helen.dayjoke.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import com.helen.dayjoke.entity.VersionInfo;
 import com.helen.dayjoke.entity.constellation.VersionInfoResponseEn;
 import com.helen.dayjoke.ui.service.DownloadService;
 import com.helen.dayjoke.ui.view.MaterialDialog;
+import com.helen.dayjoke.utils.ToastUtil;
 
 import java.util.List;
 
@@ -45,11 +49,24 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
         findViewById(R.id.layout_check_update).setOnClickListener(this);
         findViewById(R.id.layout_open_source).setOnClickListener(this);
         findViewById(R.id.layout_share).setOnClickListener(this);
+        findViewById(R.id.iv_zhifubao).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                saveDrawable();
+                ToastUtil.showToast(AboutActivity.this,"图片已保存");
+                return true;
+            }
+        });
         TextView currentVersion = (TextView) findViewById(R.id.text_current_version);
         currentVersion.setText(getString(R.string.v, BuildConfig.VERSION_NAME));
         mNewVersion = (TextView) findViewById(R.id.text_new_version);
         mAPIService = APIManager.getInstance().getAPIService();
         checkUpdate();
+    }
+
+    private void saveDrawable(){
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.icon_zhifubao_white);
+        MediaStore.Images.Media.insertImage(getContentResolver(),bitmap,"支付宝二维码","支付宝二维码");
     }
 
     private void checkUpdate(){
@@ -141,9 +158,27 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
 
                 break;
             case R.id.layout_share:
-
+                shareIntent(this,getString(R.string.app_name),"愿你每一天都快快乐乐，每天看到你的笑容是我最大的幸福！快来下载吧！"+mVersionInfo.getApkFile().getUrl());
                 break;
         }
+    }
+
+    /**
+     * 分享Intent
+     */
+    public static void shareIntent(Context context, String titleString,
+                                   String content) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, titleString);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+        try {
+            context.startActivity(Intent.createChooser(intent, "更多分享"));
+        } catch (Exception e) {
+            ToastUtil.showToast(context, "没有找到分享软件");
+        }
+
     }
 
     private boolean hasNewVersion(){

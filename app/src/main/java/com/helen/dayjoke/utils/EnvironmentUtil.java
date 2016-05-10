@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -127,15 +128,22 @@ public class EnvironmentUtil {
         return DJApplication.getInstance().getExternalCacheDir();
     }
 
+    public static File getDownloadFile(){
+        return new File(Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DOWNLOADS);
+    }
+
+    private static Point mScreenPoint;
     public static Point getScreenHW(){
-        WindowManager wm = (WindowManager) DJApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point outSize = new Point();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            display.getSize(outSize);
-        }else {
-            outSize.set(display.getWidth(),display.getHeight());
+        if(mScreenPoint == null) {
+            WindowManager wm = (WindowManager) DJApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            mScreenPoint = new Point();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+                display.getSize(mScreenPoint);
+            } else {
+                mScreenPoint.set(display.getWidth(), display.getHeight());
+            }
         }
-        return outSize;
+        return mScreenPoint;
     }
 }
