@@ -28,7 +28,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by 李晓伟 on 2016/5/6.
+ * Created by Helen on 2016/5/6.
  * 关于
  */
 public class AboutActivity extends TitlebarActivity implements View.OnClickListener{
@@ -53,7 +53,7 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
             @Override
             public boolean onLongClick(View v) {
                 saveDrawable();
-                ToastUtil.showToast(AboutActivity.this,"图片已保存");
+                ToastUtil.showToast(AboutActivity.this,getString(R.string.pic_save));
                 return true;
             }
         });
@@ -66,7 +66,7 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
 
     private void saveDrawable(){
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.icon_zhifubao_white);
-        MediaStore.Images.Media.insertImage(getContentResolver(),bitmap,"支付宝二维码","支付宝二维码");
+        MediaStore.Images.Media.insertImage(getContentResolver(),bitmap,getString(R.string.zhi_fu_bao),getString(R.string.zhi_fu_bao));
     }
 
     private void checkUpdate(){
@@ -129,27 +129,33 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
             case R.id.layout_check_update:
                 final MaterialDialog materialDialog = new MaterialDialog(this);
                 materialDialog.setTitle(getString(R.string.alert));
-                materialDialog.setPositiveButton(getString(R.string.sure), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(hasNewVersion()) {
-                            Intent intent = new Intent(AboutActivity.this, DownloadService.class);
-                            intent.putExtra(DownloadService.KEY_URL,mVersionInfo.getApkFile().getUrl());
-                            startService(intent);
-                        }
-                        materialDialog.dismiss();
-                    }
-                });
-                materialDialog.setNegativeButton(getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        materialDialog.dismiss();
-                    }
-                });
 
                 if(hasNewVersion()){
+                    materialDialog.setPositiveButton(getString(R.string.update), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(hasNewVersion()) {
+                                Intent intent = new Intent(AboutActivity.this, DownloadService.class);
+                                intent.putExtra(DownloadService.KEY_URL,mVersionInfo.getApkFile().getUrl());
+                                startService(intent);
+                            }
+                            materialDialog.dismiss();
+                        }
+                    });
+                    materialDialog.setNegativeButton(getString(R.string.cancel), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            materialDialog.dismiss();
+                        }
+                    });
                     materialDialog.setMessage(Html.fromHtml(mVersionInfo.getUpdateContent()));
                 }else {
+                    materialDialog.setPositiveButton(getString(R.string.sure), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            materialDialog.dismiss();
+                        }
+                    });
                     materialDialog.setMessage(getString(R.string.no_new_version));
                 }
                 materialDialog.show();
@@ -158,7 +164,7 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
                 OpenSourceActivity.launcher(this);
                 break;
             case R.id.layout_share:
-                shareIntent(this,getString(R.string.app_name),"愿你每一天都快快乐乐，每天看到你的笑容是我最大的幸福！快来下载吧！"+mVersionInfo.getApkFile().getUrl());
+                shareIntent(this,getString(R.string.app_name),getString(R.string.share_tip)+mVersionInfo.getApkFile().getUrl());
                 break;
         }
     }
@@ -174,9 +180,9 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Intent.EXTRA_TEXT, content);
         try {
-            context.startActivity(Intent.createChooser(intent, "更多分享"));
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string.more_share)));
         } catch (Exception e) {
-            ToastUtil.showToast(context, "没有找到分享软件");
+            ToastUtil.showToast(context, context.getString(R.string.not_find_share_soft));
         }
 
     }

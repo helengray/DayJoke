@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import com.helen.dayjoke.R;
 
 /**
- * Created by 李晓伟 on 2016/5/5.
+ * Created by Helen on 2016/5/5.
  *
  */
 public class TitlebarActivity extends BaseActivity{

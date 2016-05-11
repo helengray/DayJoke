@@ -1,7 +1,7 @@
 package com.helen.dayjoke.entity;
 
 /**
- * Created by 李晓伟 on 2016/5/6.
+ * Created by Helen on 2016/5/6.
  *
  */
 public class VersionInfo extends BaseEn{

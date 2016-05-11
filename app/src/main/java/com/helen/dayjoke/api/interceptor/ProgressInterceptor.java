@@ -6,7 +6,7 @@ import okhttp3.Interceptor;
 import okhttp3.Response;
 
 /**
- * Created by 李晓伟 on 2016/5/9.
+ * Created by Helen on 2016/5/9.
  *
  */
 public class ProgressInterceptor implements Interceptor{

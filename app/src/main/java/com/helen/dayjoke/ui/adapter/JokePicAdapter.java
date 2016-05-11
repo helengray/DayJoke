@@ -17,7 +17,7 @@ import com.helen.dayjoke.ui.view.GalleryDialog;
 import java.util.List;
 
 /**
- * Created by 李晓伟 on 2016/4/27.
+ * Created by Helen on 2016/4/27.
  *
  */
 public class JokePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{

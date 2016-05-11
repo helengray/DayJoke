@@ -12,7 +12,7 @@ import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
 
 /**
- * Created by 李晓伟 on 2016/5/11.
+ * Created by Helen on 2016/5/11.
  *
  */
 public class JokeTextDetailActivity extends TitlebarActivity{

@@ -1,7 +1,7 @@
 package com.helen.dayjoke.entity;
 
 /**
- * Created by 李晓伟 on 2016/5/3.
+ * Created by Helen on 2016/5/3.
  *
  */
 public class ConstellationEn extends BaseEn{

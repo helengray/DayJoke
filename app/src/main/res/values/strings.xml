@@ -54,8 +54,14 @@
     <string name="no_new_version">当前已是最新版本</string>
     <string name="new_version_download">新版本下载</string>
     <string name="alert">提示</string>
-    <string name="sure">更新</string>
+    <string name="update">更新</string>
+    <string name="sure">确定</string>
     <string name="cancel">取消</string>
+    <string name="zhi_fu_bao">支付宝二维码</string>
+    <string name="pic_save">图片已保存</string>
+    <string name="more_share">更多分享</string>
+    <string name="not_find_share_soft">没有找到分享软件</string>
+    <string name="share_tip">愿你每一天都快快乐乐，每天看到你的笑容是我最大的幸福！快来下载吧！</string>
     <string name="open_source_content">
         \n
         ------------------\n
@@ -89,4 +95,5 @@
         http://www.bmob.cn\n\n
 
     </string>
+
 </resources>

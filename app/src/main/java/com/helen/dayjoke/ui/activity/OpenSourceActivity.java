@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import com.helen.dayjoke.R;
 
 /**
- * Created by 李晓伟 on 2016/5/10.
+ * Created by Helen on 2016/5/10.
  *
  */
 public class OpenSourceActivity extends BaseActivity{

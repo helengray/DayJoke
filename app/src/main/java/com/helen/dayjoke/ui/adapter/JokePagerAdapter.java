@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 李晓伟 on 2016/4/29.
+ * Created by Helen on 2016/4/29.
  *
  */
 public class JokePagerAdapter extends FragmentPagerAdapter{

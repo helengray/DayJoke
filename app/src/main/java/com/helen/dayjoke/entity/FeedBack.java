@@ -4,7 +4,7 @@ package com.helen.dayjoke.entity;
 import com.google.gson.Gson;
 
 /**
- * Created by 李晓伟 on 2016/5/5.
+ * Created by Helen on 2016/5/5.
  * 用户反馈
  */
 public class FeedBack extends BaseEn{

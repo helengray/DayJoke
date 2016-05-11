@@ -3,7 +3,7 @@ package com.helen.dayjoke.utils;
 import java.io.File;
 
 /**
- * Created by 李晓伟 on 2016/5/5.
+ * Created by Helen on 2016/5/5.
  *
  */
 public class FileUtil {

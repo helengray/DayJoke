@@ -3,7 +3,7 @@ package com.helen.dayjoke.entity.constellation;
 import java.io.Serializable;
 
 /**
- * Created by 李晓伟 on 2016/5/4.
+ * Created by Helen on 2016/5/4.
  *
  */
 public abstract class Constellation implements Serializable{

@@ -6,7 +6,7 @@ import com.helen.dayjoke.BuildConfig;
 
 
 /**
- * Created by 李晓伟 on 2016/4/6.
+ * Created by Helen on 2016/4/6.
  *
  */
 public class HLog {

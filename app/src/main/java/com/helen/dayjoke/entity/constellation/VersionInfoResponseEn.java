@@ -6,7 +6,7 @@ import com.helen.dayjoke.entity.VersionInfo;
 import java.util.List;
 
 /**
- * Created by 李晓伟 on 2016/5/9.
+ * Created by Helen on 2016/5/9.
  *
  */
 public class VersionInfoResponseEn extends BaseEn{

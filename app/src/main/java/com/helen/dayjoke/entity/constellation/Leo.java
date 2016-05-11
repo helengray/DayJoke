@@ -1,10 +1,9 @@
 package com.helen.dayjoke.entity.constellation;
 
 import com.helen.dayjoke.R;
-import com.helen.dayjoke.entity.constellation.Constellation;
 
 /**
- * Created by 李晓伟 on 2016/5/4.
+ * Created by Helen on 2016/5/4.
  * 狮子座
  */
 public class Leo extends Constellation {

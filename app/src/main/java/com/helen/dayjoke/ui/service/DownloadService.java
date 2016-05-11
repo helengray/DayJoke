@@ -17,7 +17,7 @@ import com.helen.dayjoke.utils.EnvironmentUtil;
 import java.io.File;
 
 /**
- * Created by 李晓伟 on 2016/5/9.
+ * Created by Helen on 2016/5/9.
  *
  */
 public class DownloadService extends Service{

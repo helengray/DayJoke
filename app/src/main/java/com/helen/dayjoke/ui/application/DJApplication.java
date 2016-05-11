@@ -8,7 +8,7 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 
 /**
- * Created by 李晓伟 on 2016/4/28.
+ * Created by Helen on 2016/4/28.
  *
  */
 public class DJApplication extends Application{
