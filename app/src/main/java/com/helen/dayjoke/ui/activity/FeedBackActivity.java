@@ -19,6 +19,7 @@ import com.helen.dayjoke.entity.FeedBack;
 import com.helen.dayjoke.entity.FileBodyEn;
 import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.utils.EnvironmentUtil;
+import com.helen.dayjoke.utils.FileUtil;
 import com.helen.dayjoke.utils.ToastUtil;
 
 import java.io.File;
@@ -99,7 +100,7 @@ public class FeedBackActivity extends TitlebarActivity implements View.OnClickLi
     /**
      * 上传
      */
-    private void upload(final FeedBack feedBack , File logFile){
+    private void upload(final FeedBack feedBack , final File logFile){
         if(mSubscriber == null || mSubscriber.isUnsubscribed()){
             mSubscriber = new Subscriber<BaseEn>() {
                 @Override
@@ -114,6 +115,9 @@ public class FeedBackActivity extends TitlebarActivity implements View.OnClickLi
                 @Override
                 public void onNext(BaseEn o) {
                     ToastUtil.showToast(FeedBackActivity.this,getString(R.string.thanks_to_feedback));
+                    if(logFile != null && logFile.exists()) {
+                        FileUtil.deleteFile(logFile);
+                    }
                 }
             };
         }

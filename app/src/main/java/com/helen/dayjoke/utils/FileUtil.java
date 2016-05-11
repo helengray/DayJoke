@@ -49,4 +49,19 @@ public class FileUtil {
             dir.delete();
         }
     }
+
+    // 先renameTo()然后再delete，避免后续可能出现的写异常
+    public static void deleteFile(File f) {
+        if (f == null) {
+            return;
+        }
+        String pathDel = f.getAbsolutePath() + "." + System.currentTimeMillis() + ".del";
+        File fDel = new File(pathDel);
+        boolean bool = f.renameTo(fDel);
+        if (bool) {
+            fDel.delete();
+        } else {
+            f.delete();
+        }
+    }
 }

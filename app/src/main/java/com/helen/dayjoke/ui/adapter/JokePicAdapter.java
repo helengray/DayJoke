@@ -51,8 +51,10 @@ public class JokePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if(mGalleryDialog == null){
                 mGalleryDialog = new GalleryDialog(v.getContext());
             }
-            String url = (String) v.getTag(R.id.pic);
-            mGalleryDialog.showGallery(Uri.parse(url));
+            JokeEn jokeEn = (JokeEn) v.getTag(R.id.pic);
+            String url = jokeEn.getImg() ;
+            String title = jokeEn.getTitle();
+            mGalleryDialog.showGallery(Uri.parse(url),title);
         }
     };
 
@@ -65,7 +67,7 @@ public class JokePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             jokeViewHolder.mTextTime.setText(jokeEn.getTime());
             jokeViewHolder.mPic.setImageURI(Uri.parse(jokeEn.getImg()));
             jokeViewHolder.mPic.setOnClickListener(mClickListener);
-            jokeViewHolder.mPic.setTag(R.id.pic,jokeEn.getImg());
+            jokeViewHolder.mPic.setTag(R.id.pic,jokeEn);
         }else {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
             switch (status){

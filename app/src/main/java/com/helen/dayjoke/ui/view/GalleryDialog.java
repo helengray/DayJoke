@@ -59,6 +59,7 @@ public class GalleryDialog extends Dialog {
 	private ViewPager mViewPager;
 	private List<Uri> mImageUris = new ArrayList<Uri>();
 	private ViewPagerAdapter mAdapter ;
+	private TextView mTextTitle;
 
 	public GalleryDialog(Context context) {
 		this(context, R.style.gallery_dialog);
@@ -82,9 +83,11 @@ public class GalleryDialog extends Dialog {
 		};
 		this.setOnCancelListener(mCancelListener);
 		setContentView(R.layout.gallery_dialog);
-		
-
+		mTextTitle = (TextView) findViewById(R.id.tv_title);
 		mViewPager = (ViewPager)findViewById(R.id.gallery_dialog_view_pager);
+		mAdapter = new ViewPagerAdapter(getContext(),mImageUris);
+		mViewPager.setAdapter(mAdapter);
+		mViewPager.setEnabled(false);
 		mSaveButton = (TextView) findViewById(R.id.btn_save);
 		mSaveButton.setOnClickListener(mClickListener);
 
@@ -96,27 +99,13 @@ public class GalleryDialog extends Dialog {
     }
 
 
-	public void showGallery(Uri currentUri){
+	public void showGallery(Uri currentUri,String title){
 		try {
-			int position = 0;
-			//int tempPosition = 0;
-			if(mImageUris == null){
-				mImageUris = new ArrayList<Uri>();
-			}
 			mImageUris.clear();
 			mImageUris.add(currentUri);
-			/*for(Uri uri : imageUris){
-				mImageUris.add(uri);	
-				if(uri.toString().equals(currentUri.toString())){
-					position = tempPosition;
-				}
-				tempPosition++;
-			}*/
-			mAdapter = new ViewPagerAdapter(getContext(),mImageUris);
-			mViewPager.setAdapter(mAdapter);
-			mViewPager.setEnabled(false);		
+			mTextTitle.setText(title);
 			mAdapter.notifyDataSetChanged();
-			mViewPager.setCurrentItem(position>0?position:0);
+			mViewPager.setCurrentItem(0);
 			super.show();
 		} catch (Exception e) {
 			//do nothing
