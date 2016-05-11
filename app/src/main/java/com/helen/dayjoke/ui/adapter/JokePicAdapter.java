@@ -64,7 +64,7 @@ public class JokePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             JokeViewHolder jokeViewHolder = (JokeViewHolder) holder;
             JokeEn jokeEn = jokeEnList.get(position);
             jokeViewHolder.mTextTitle.setText(jokeEn.getTitle());
-            jokeViewHolder.mTextTime.setText(jokeEn.getTime());
+            jokeViewHolder.mTextTime.setText(jokeEn.getTimeFormat());
             jokeViewHolder.mPic.setImageURI(Uri.parse(jokeEn.getImg()));
             jokeViewHolder.mPic.setOnClickListener(mClickListener);
             jokeViewHolder.mPic.setTag(R.id.pic,jokeEn);

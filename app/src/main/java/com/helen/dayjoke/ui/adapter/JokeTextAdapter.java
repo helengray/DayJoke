@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
+import com.helen.dayjoke.ui.activity.JokeTextDetailActivity;
 import com.helen.dayjoke.ui.view.EmptyEmbeddedContainer;
 
 import java.util.List;
@@ -46,8 +47,9 @@ public class JokeTextAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(holder instanceof JokeViewHolder){
             JokeViewHolder jokeViewHolder = (JokeViewHolder) holder;
             JokeEn jokeEn = jokeEnList.get(position);
+            jokeViewHolder.setBean(jokeEn);
             jokeViewHolder.mTextTitle.setText(jokeEn.getTitle());
-            jokeViewHolder.mTextTime.setText(jokeEn.getTime());
+            jokeViewHolder.mTextTime.setText(jokeEn.getTimeFormat());
             jokeViewHolder.mTextContent.setText(Html.fromHtml(jokeEn.getContent()));
         }else {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
@@ -98,15 +100,26 @@ public class JokeTextAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      * Created by 李晓伟 on 2016/4/27.
      *
      */
-    class JokeViewHolder extends RecyclerView.ViewHolder{
+    private class JokeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView mTextTitle;
         TextView mTextTime;
         TextView mTextContent;
+        private JokeEn mBean;
         public JokeViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             mTextTitle = (TextView) itemView.findViewById(R.id.text_title);
             mTextTime = (TextView) itemView.findViewById(R.id.text_time);
             mTextContent = (TextView) itemView.findViewById(R.id.text_content);
+        }
+
+        public void setBean(JokeEn jokeEn){
+            this.mBean = jokeEn;
+        }
+
+        @Override
+        public void onClick(View v) {
+            JokeTextDetailActivity.launcher(v.getContext(),mBean);
         }
     }
 
@@ -117,7 +130,7 @@ public class JokeTextAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    class FooterViewHolder extends RecyclerView.ViewHolder{
+    private class FooterViewHolder extends RecyclerView.ViewHolder{
         private TextView mTextMore;
         private ProgressBar mProgressBar;
         public FooterViewHolder(View itemView) {

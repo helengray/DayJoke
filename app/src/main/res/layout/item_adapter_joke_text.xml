@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.andexert.library.RippleView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/RippleViewStyle">
+<LinearLayout
     android:orientation="vertical"
     android:paddingLeft="@dimen/margin_left"
     android:paddingRight="@dimen/margin_left"
@@ -34,7 +39,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:maxLines="3"
+        android:maxLines="2"
         android:ellipsize="end"
         style="@style/SubheadStyle"/>
 </LinearLayout>
+</com.andexert.library.RippleView>
