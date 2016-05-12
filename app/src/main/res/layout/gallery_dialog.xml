@@ -1,36 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Grey_1000"
     android:orientation="vertical">
-    <android.support.v4.view.ViewPager
-        android:id="@+id/gallery_dialog_view_pager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:id="@+id/tv_title"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/Grey_1000"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/gallery_dialog_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TitleStyle.Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_save_image"
+            android:padding="5dp"
+            />
+
+        <TextView
+            android:id="@+id/btn_save"
+            style="@style/TitleStyle.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_save_image"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/save_image"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_ad"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TitleStyle.Light"
-        android:layout_margin="5dp"
-        android:text="这是标题"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/bg_save_image"
-        android:padding="5dp"
-        />
-    <TextView
-        android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TitleStyle.Light"
-        android:text="@string/save_image"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center"
-        android:background="@drawable/bg_save_image"
-        android:padding="5dp"
-        />
-</RelativeLayout>
+        android:layout_height="wrap_content"/>
+</LinearLayout>

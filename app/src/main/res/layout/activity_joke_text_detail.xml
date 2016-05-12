@@ -1,45 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/layout_ad"
+        >
 
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/TitleStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:paddingRight="3dp"
-            android:paddingLeft="3dp"
-            />
+            android:orientation="vertical">
 
-        <View style="@style/LineStyle" android:background="@color/Grey_500"/>
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TitleStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                />
 
-        <TextView
-            android:id="@+id/tv_content"
-            style="@style/SubheadStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="8dp"/>
+            <View
+                style="@style/LineStyle"
+                android:background="@color/Grey_500"/>
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="right"
-            />
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/tv_content"
+                style="@style/SubheadStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="right"
+                />
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/layout_ad"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

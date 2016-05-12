@@ -1,5 +1,6 @@
 package com.helen.dayjoke.ui.view;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,8 +15,11 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.mobads.AdView;
+import com.baidu.mobads.AdViewListener;
 import com.facebook.binaryresource.FileBinaryResource;
 import com.facebook.cache.common.SimpleCacheKey;
 import com.facebook.common.logging.FLog;
@@ -32,8 +36,11 @@ import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.photodraweeview.OnViewTapListener;
 import com.helen.dayjoke.ui.view.photodraweeview.PhotoDraweeView;
 import com.helen.dayjoke.utils.EnvironmentUtil;
+import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.MD5;
 import com.helen.dayjoke.utils.ToastUtil;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,16 +67,17 @@ public class GalleryDialog extends Dialog {
 	private List<Uri> mImageUris = new ArrayList<Uri>();
 	private ViewPagerAdapter mAdapter ;
 	private TextView mTextTitle;
+	private RelativeLayout mAdLayout;
 
 	public GalleryDialog(Context context) {
 		this(context, R.style.gallery_dialog);
-		mContext = context;
+		mContext = (Activity) context;
 	}
 
-	Context mContext;
+	Activity mContext;
 	public GalleryDialog(Context context, int theme) {
 		super(context, theme);
-		mContext = context;
+		mContext = (Activity) context;
 		
 		this.setOnDismissListener(mDismissListener);
 
@@ -78,7 +86,8 @@ public class GalleryDialog extends Dialog {
 			@Override
 			public void onCancel(DialogInterface dialog) {
 				mImageUris.clear();
-				mImageUris = null;
+				mAdLayout.removeAllViews();
+				adView.destroy();
 			}
 		};
 		this.setOnCancelListener(mCancelListener);
@@ -90,10 +99,43 @@ public class GalleryDialog extends Dialog {
 		mViewPager.setEnabled(false);
 		mSaveButton = (TextView) findViewById(R.id.btn_save);
 		mSaveButton.setOnClickListener(mClickListener);
-
+		mAdLayout = (RelativeLayout) findViewById(R.id.layout_ad);
     }
+	private AdView adView;
+	private void initAD() {
+		adView = new AdView(mContext,Constant.AD_ID_PIC_DETAIL);
+		adView.setListener(new AdViewListener() {
+			public void onAdSwitch() {
+				HLog.d(TAG, "onAdSwitch");
+			}
 
-    @Override
+			public void onAdShow(JSONObject info) {
+				// 广告已经渲染出来
+				HLog.d(TAG, "onAdShow " + info.toString());
+				mAdLayout.setVisibility(View.VISIBLE);
+			}
+
+			public void onAdReady(AdView adView) {
+				// 资源已经缓存完毕，还没有渲染出来
+				HLog.d(TAG, "onAdReady " + adView);
+			}
+
+			public void onAdFailed(String reason) {
+				mAdLayout.setVisibility(View.GONE);
+				HLog.d(TAG, "onAdFailed " + reason);
+			}
+
+			public void onAdClick(JSONObject info) {
+				HLog.d(TAG, "onAdClick " + info.toString());
+			}
+		});
+		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		mAdLayout.addView(adView,rllp);
+	}
+
+
+	@Override
     public void dismiss() {
         super.dismiss();
     }
@@ -101,6 +143,7 @@ public class GalleryDialog extends Dialog {
 
 	public void showGallery(Uri currentUri,String title){
 		try {
+			initAD();
 			mImageUris.clear();
 			mImageUris.add(currentUri);
 			mTextTitle.setText(title);
@@ -109,6 +152,7 @@ public class GalleryDialog extends Dialog {
 			super.show();
 		} catch (Exception e) {
 			//do nothing
+			e.printStackTrace();
 		}
 
 	}
@@ -249,6 +293,8 @@ public class GalleryDialog extends Dialog {
 					mImageUris.clear();
 					mAdapter.notifyDataSetChanged();
 				}
+				mAdLayout.removeAllViews();
+				adView.destroy();
 			} catch (Exception e) {
 				FLog.e(TAG, e, ">>>>>>>>>> mDismissListener -- onDismiss() <<<<<<<<<<");
 			}

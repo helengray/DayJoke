@@ -1,12 +1,12 @@
 package com.helen.dayjoke.entity.constellation;
 
-import java.io.Serializable;
+import com.helen.dayjoke.entity.BaseEn;
 
 /**
  * Created by Helen on 2016/5/4.
  *
  */
-public abstract class Constellation implements Serializable{
+public abstract class Constellation extends BaseEn{
     public static final Constellation[] CONSTELLATIONS = new Constellation[]{
             new Aquarius(),
             new Pisces(),

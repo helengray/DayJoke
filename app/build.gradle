@@ -1,15 +1,28 @@
 apply plugin: 'com.android.application'
 
 android {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def keyAliasStr = properties.getProperty("keyAlias","")
+    def keyPasswordStr = properties.getProperty("keyPassword","")
+    def fileUrl = properties.getProperty("storeFile","")
+
+    signingConfigs {
+        myConfig {
+            keyAlias keyAliasStr
+            keyPassword keyPasswordStr
+            storeFile file(fileUrl)
+            storePassword keyPasswordStr
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
         applicationId "com.helen.dayjoke"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "0.0.1"
+        versionName "1.0.0"
         multiDexEnabled true
     }
     buildTypes {
@@ -17,6 +30,7 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.myConfig
         }
     }
     compileOptions {

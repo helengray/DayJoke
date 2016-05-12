@@ -19,8 +19,8 @@ public class Constant {
     public static final String CACHE_LOG = "crash";
     /**崩溃文件名称*/
     public static final String LOG_FILE_NAME = "AppCrash.log";
-    /**apk文件*/
-    public static final String DOWNLOAD_APK_FILE = "apk";
+    /**apk文件夹*/
+    public static final String DOWNLOAD_APK_FILE = "dayjoke/apk";
     /**apk文件*/
     public static final String DOWNLOAD_APK_NAME = "dayjoke.apk";
     /**日志文件最大大小*/
@@ -36,4 +36,8 @@ public class Constant {
     public static final MediaType TEXT = MediaType.parse("text/plain");
     /**RequestBody Json格式*/
     public static final MediaType JSON = MediaType.parse("application/json");
+    /**文本笑话详情广告*/
+    public static final String AD_ID_TEXT_DETAIL = "2529153";
+    /**图片笑话详情广告*/
+    public static final String AD_ID_PIC_DETAIL = "2529625";
 }

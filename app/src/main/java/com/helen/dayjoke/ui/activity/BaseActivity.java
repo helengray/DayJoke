@@ -22,7 +22,29 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activitiesMap.put(BaseActivity.this.toString(), new WeakReference<BaseActivity>(this));
+        /*Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Translucent status bar
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        int color = getResources().getColor(R.color.colorAccent);
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+            window.setStatusBarColor(color);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            ViewGroup contentView = (ViewGroup) findViewById(android.R.id.content);
+            View statusBarView = new View(this);
+            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    getStatusBarHeight(this));
+            statusBarView.setBackgroundColor(color);
+            contentView.addView(statusBarView, lp);
+        }*/
+
     }
+
+    /*public static int getStatusBarHeight(Context context){
+        return context.getResources().getDimensionPixelSize(R.dimen.actionBarSize);
+    }*/
 
     @Override
     protected void onDestroy() {
