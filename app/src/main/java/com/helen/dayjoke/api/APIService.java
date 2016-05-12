@@ -38,8 +38,8 @@ public interface APIService {
     @POST("https://api.bmob.cn/2/files/{fileName}")
     Observable<FileBodyEn> postFileUpload(@Path("fileName") String fileName, @Body RequestBody file);
 
-    @POST("https://api.bmob.cn/1/classes/{tableName}")
-    Observable<BaseEn> postFeedback(@Path("tableName") String simpleClassName, @Body RequestBody feedBack);
+    @POST("https://api.bmob.cn/1/classes/FeedBack")
+    Observable<BaseEn> postFeedback(@Body RequestBody feedBack);
 
     @GET("https://api.bmob.cn/1/classes/VersionInfo")
     Observable<VersionInfoResponseEn> getVersionInfo(@Query("limit") int limit, @Query("order") String bql);

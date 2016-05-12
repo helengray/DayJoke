@@ -164,7 +164,11 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
                 OpenSourceActivity.launcher(this);
                 break;
             case R.id.layout_share:
-                shareIntent(this,getString(R.string.app_name),getString(R.string.share_tip)+mVersionInfo.getApkFile().getUrl());
+                String message = getString(R.string.share_tip);
+                if(mVersionInfo != null){
+                    message += mVersionInfo.getApkFile().getUrl();
+                }
+                shareIntent(this,getString(R.string.app_name),message);
                 break;
         }
     }

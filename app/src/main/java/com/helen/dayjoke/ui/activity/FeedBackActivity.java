@@ -150,7 +150,7 @@ public class FeedBackActivity extends TitlebarActivity implements View.OnClickLi
      */
     private Observable<BaseEn> doPostFeedback(FeedBack feedBack){
         RequestBody feedbackBody = RequestBody.create(Constant.JSON, feedBack.toString());
-        return mAPIService.postFeedback(FeedBack.class.getSimpleName(),feedbackBody);
+        return mAPIService.postFeedback(feedbackBody);
     }
 
     @Override

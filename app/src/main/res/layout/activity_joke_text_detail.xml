@@ -23,6 +23,8 @@
                 style="@style/TitleStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="45dp"
+                android:gravity="center_vertical"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:paddingLeft="3dp"
@@ -41,7 +43,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="8dp"
-                android:lineSpacingExtra="5dp"/>
+                android:lineSpacingExtra="8dp"/>
 
             <TextView
                 android:id="@+id/tv_time"

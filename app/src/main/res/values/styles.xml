@@ -22,35 +22,40 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--大标题样式-->
-    <style name="TitleStyle">
-        <item name="android:textColor">@color/Grey_1000</item>
-        <item name="android:textSize">@dimen/font_16</item>
+    <style name="TitleStyle" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/Grey_900</item>
+        <item name="android:textSize">@dimen/font_18</item>
     </style>
 
     <!--小标题样式(内容)-->
     <style name="SubheadStyle">
-        <item name="android:textColor">@color/Grey_900</item>
-        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textColor">@color/Grey_600</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
     <!--说明文字样式-->
     <style name="CaptionStyle">
-        <item name="android:textColor">@color/Grey_500</item>
-        <item name="android:textSize">@dimen/font_12</item>
+        <item name="android:textColor">@color/Grey_400</item>
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
     <style name="TitleStyle.Light">
         <item name="android:textColor">@color/Grey_50</item>
     </style>
 
+    <style name="SubheadStyle.Light">
+        <item name="android:textColor">@color/Grey_50</item>
+    </style>
+
     <style name="CaptionStyle.Light">
         <item name="android:textColor">@color/Grey_50</item>
-        <item name="android:textSize">@dimen/font_12</item>
     </style>
 
     <style name="gallery_dialog">
         <item name="android:windowBackground">@color/Grey_1000</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowAnimationStyle">@style/dialogWindowAnim</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
     <style name="dialogWindowAnim" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/fade_in</item>

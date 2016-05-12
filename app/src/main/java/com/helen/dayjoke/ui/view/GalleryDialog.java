@@ -346,13 +346,13 @@ public class GalleryDialog extends Dialog {
 							Point point = EnvironmentUtil.getScreenHW();
 							final int sHeight = point.y; //屏幕高度
 							final int sWidth = point.x; //屏幕宽度
-							/*********************适配图片宽度到屏幕宽度方便用户查看图片****************************/
-							float fromRealToScreenW = 1.0f * sWidth / width;
-							float fromRealToScreenH = 1.0f * sHeight / height;
+
+							float rw = 1.0f * sWidth / width;
+							float rh = 1.0f * sHeight / height;
 							//获取freso将图片缩放到一屏显示的缩放比例
-							float fromRealToScreen = fromRealToScreenH < fromRealToScreenW?fromRealToScreenH:fromRealToScreenW;
-							//1.0f/fromRealToScreen 用来扩大到原始图片大小，再乘以fromRealToScreenW用来适配屏幕宽度
-							final float scale = 1.0f/fromRealToScreen * fromRealToScreenW;
+							float rs = rh < rw?rh:rw;
+							//先扩大到原始图片大小，再乘以用来适配屏幕宽度
+							final float scale = 1.0f/rs * rw;
 							photoView.setMinimumScale(scale);
 							photoView.setMaximumScale(scale * 2);
 							photoView.postDelayed(new Runnable() {
@@ -361,7 +361,7 @@ public class GalleryDialog extends Dialog {
 									photoView.setScale(scale, false);
 								}
 							}, 200);
-							/*************************************************/
+
 						}
 
 						@Override
