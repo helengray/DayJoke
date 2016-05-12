@@ -165,9 +165,9 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
                 break;
             case R.id.layout_share:
                 String message = getString(R.string.share_tip);
-                if(mVersionInfo != null){
+                /*if(mVersionInfo != null){
                     message += mVersionInfo.getApkFile().getUrl();
-                }
+                }*/
                 shareIntent(this,getString(R.string.app_name),message);
                 break;
         }
