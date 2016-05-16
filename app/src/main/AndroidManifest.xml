@@ -62,12 +62,17 @@
 
         <service android:name=".ui.service.DownloadService"/>
 
-        <!--百度广告-->
-        <meta-data android:name="BaiduMobAd_APP_ID" android:value="fd55d53d" />
-        <activity
-            android:name="com.baidu.mobads.AppActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <receiver android:name="com.fw.bn.AdReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <activity android:name="com.fw.bn.WebViewActivity"
+                  android:configChanges="keyboardHidden|orientation" />
 
     </application>
 

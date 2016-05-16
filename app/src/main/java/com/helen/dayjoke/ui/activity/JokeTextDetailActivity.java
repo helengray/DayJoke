@@ -10,14 +10,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baidu.mobads.AdView;
-import com.baidu.mobads.AdViewListener;
+import com.fw.bn.AdBanner;
+import com.fw.bn.RecevieAdListener;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
-import com.helen.dayjoke.ui.application.Constant;
-import com.helen.dayjoke.utils.HLog;
-
-import org.json.JSONObject;
 
 /**
  * Created by Helen on 2016/5/11.
@@ -27,7 +23,7 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     public static final String TAG = "ADView";
     public static final String KEY_DATA = "data";
     private JokeEn mJokeEn;
-    private AdView adView;
+    private AdBanner adView;
     public static void launcher(Context context, JokeEn jokeEn){
         Intent intent = new Intent(context,JokeTextDetailActivity.class);
         intent.putExtra(KEY_DATA, (Parcelable) jokeEn);
@@ -52,30 +48,17 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     }
 
     private void initAD(){
-        adView = new AdView(this, Constant.AD_ID_TEXT_DETAIL);
-        adView.setListener(new AdViewListener() {
-            public void onAdSwitch() {
-                HLog.d(TAG, "onAdSwitch");
-            }
-
-            public void onAdShow(JSONObject info) {
-                // 广告已经渲染出来
-                HLog.d(TAG, "onAdShow " + info.toString());
+        adView = new AdBanner(this);
+        adView.setAppKey("9d50bcc2d13c9160fcf2a3fd160252a6");
+        adView.setRecevieAdListener(new RecevieAdListener() {
+            @Override
+            public void onSucessedRecevieAd(AdBanner adBanner) {
                 mAdLayout.setVisibility(View.VISIBLE);
             }
 
-            public void onAdReady(AdView adView) {
-                // 资源已经缓存完毕，还没有渲染出来
-                HLog.d(TAG, "onAdReady " + adView);
-            }
-
-            public void onAdFailed(String reason) {
-                HLog.d(TAG, "onAdFailed " + reason);
+            @Override
+            public void onFailedToRecevieAd(AdBanner adBanner) {
                 mAdLayout.setVisibility(View.GONE);
-            }
-
-            public void onAdClick(JSONObject info) {
-                HLog.d(TAG, "onAdClick " + info.toString());
             }
         });
         RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,

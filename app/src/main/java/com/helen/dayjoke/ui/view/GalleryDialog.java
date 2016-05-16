@@ -18,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baidu.mobads.AdView;
-import com.baidu.mobads.AdViewListener;
 import com.facebook.binaryresource.FileBinaryResource;
 import com.facebook.cache.common.SimpleCacheKey;
 import com.facebook.common.logging.FLog;
@@ -31,16 +29,15 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
+import com.fw.bn.AdBanner;
+import com.fw.bn.RecevieAdListener;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.photodraweeview.OnViewTapListener;
 import com.helen.dayjoke.ui.view.photodraweeview.PhotoDraweeView;
 import com.helen.dayjoke.utils.EnvironmentUtil;
-import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.MD5;
 import com.helen.dayjoke.utils.ToastUtil;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -101,32 +98,19 @@ public class GalleryDialog extends Dialog {
 		mSaveButton.setOnClickListener(mClickListener);
 		mAdLayout = (RelativeLayout) findViewById(R.id.layout_ad);
     }
-	private AdView adView;
+	private AdBanner adView;
 	private void initAD() {
-		adView = new AdView(mContext,Constant.AD_ID_PIC_DETAIL);
-		adView.setListener(new AdViewListener() {
-			public void onAdSwitch() {
-				HLog.d(TAG, "onAdSwitch");
-			}
-
-			public void onAdShow(JSONObject info) {
-				// 广告已经渲染出来
-				HLog.d(TAG, "onAdShow " + info.toString());
+		adView = new AdBanner(mContext);
+		adView.setAppKey("9d50bcc2d13c9160fcf2a3fd160252a6");
+		adView.setRecevieAdListener(new RecevieAdListener() {
+			@Override
+			public void onSucessedRecevieAd(AdBanner adBanner) {
 				mAdLayout.setVisibility(View.VISIBLE);
 			}
 
-			public void onAdReady(AdView adView) {
-				// 资源已经缓存完毕，还没有渲染出来
-				HLog.d(TAG, "onAdReady " + adView);
-			}
-
-			public void onAdFailed(String reason) {
+			@Override
+			public void onFailedToRecevieAd(AdBanner adBanner) {
 				mAdLayout.setVisibility(View.GONE);
-				HLog.d(TAG, "onAdFailed " + reason);
-			}
-
-			public void onAdClick(JSONObject info) {
-				HLog.d(TAG, "onAdClick " + info.toString());
 			}
 		});
 		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,

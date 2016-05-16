@@ -66,10 +66,10 @@ public static final android.os.Parcelable$Creator *;
 
 -dontwarn okio.**
 -dontwarn javax.annotation.**
-#百度广告sdk
--keep class com.baidu.** {
- *;
-}
+#飞沃广告sdk
+-keep class com.fw.bn.** {*;}
+-dontwarn com.fw.bn.**
+
 
 -keep class okhttp3.** {
  *;
