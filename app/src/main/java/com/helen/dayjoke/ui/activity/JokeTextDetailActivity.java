@@ -6,12 +6,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fw.bn.AdBanner;
-import com.fw.bn.RecevieAdListener;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
 
@@ -23,7 +20,7 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     public static final String TAG = "ADView";
     public static final String KEY_DATA = "data";
     private JokeEn mJokeEn;
-    private AdBanner adView;
+    //private AdBanner adView;
     public static void launcher(Context context, JokeEn jokeEn){
         Intent intent = new Intent(context,JokeTextDetailActivity.class);
         intent.putExtra(KEY_DATA, (Parcelable) jokeEn);
@@ -48,8 +45,8 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     }
 
     private void initAD(){
-        adView = new AdBanner(this);
-        adView.setAppKey("9d50bcc2d13c9160fcf2a3fd160252a6");
+        /*adView = new AdBanner(this);
+        adView.setAppKey();
         adView.setRecevieAdListener(new RecevieAdListener() {
             @Override
             public void onSucessedRecevieAd(AdBanner adBanner) {
@@ -63,14 +60,14 @@ public class JokeTextDetailActivity extends TitlebarActivity{
         });
         RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        mAdLayout.addView(adView,rllp);
+        mAdLayout.addView(adView,rllp);*/
     }
 
 
     @Override
     protected void onDestroy() {
         mAdLayout.removeAllViews();
-        adView.destroy();
+        //adView.destroy();
         super.onDestroy();
     }
 

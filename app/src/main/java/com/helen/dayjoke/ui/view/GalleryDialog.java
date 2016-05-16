@@ -29,8 +29,6 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
-import com.fw.bn.AdBanner;
-import com.fw.bn.RecevieAdListener;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.photodraweeview.OnViewTapListener;
@@ -84,7 +82,7 @@ public class GalleryDialog extends Dialog {
 			public void onCancel(DialogInterface dialog) {
 				mImageUris.clear();
 				mAdLayout.removeAllViews();
-				adView.destroy();
+				//adView.destroy();
 			}
 		};
 		this.setOnCancelListener(mCancelListener);
@@ -98,9 +96,9 @@ public class GalleryDialog extends Dialog {
 		mSaveButton.setOnClickListener(mClickListener);
 		mAdLayout = (RelativeLayout) findViewById(R.id.layout_ad);
     }
-	private AdBanner adView;
+	//private AdBanner adView;
 	private void initAD() {
-		adView = new AdBanner(mContext);
+		/*adView = new AdBanner(mContext);
 		adView.setAppKey("9d50bcc2d13c9160fcf2a3fd160252a6");
 		adView.setRecevieAdListener(new RecevieAdListener() {
 			@Override
@@ -115,7 +113,7 @@ public class GalleryDialog extends Dialog {
 		});
 		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		mAdLayout.addView(adView,rllp);
+		mAdLayout.addView(adView,rllp);*/
 	}
 
 
@@ -278,7 +276,7 @@ public class GalleryDialog extends Dialog {
 					mAdapter.notifyDataSetChanged();
 				}
 				mAdLayout.removeAllViews();
-				adView.destroy();
+				//adView.destroy();
 			} catch (Exception e) {
 				FLog.e(TAG, e, ">>>>>>>>>> mDismissListener -- onDismiss() <<<<<<<<<<");
 			}

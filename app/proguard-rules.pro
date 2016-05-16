@@ -67,9 +67,9 @@ public static final android.os.Parcelable$Creator *;
 -dontwarn okio.**
 -dontwarn javax.annotation.**
 #飞沃广告sdk
--keep class com.fw.bn.** {*;}
--dontwarn com.fw.bn.**
-
+-keep class com.awesome.** { *; }
+-dontwarn com.awesome.**
+-keep class sun.misc.Unsafe { *; }
 
 -keep class okhttp3.** {
  *;

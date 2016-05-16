@@ -62,18 +62,6 @@
 
         <service android:name=".ui.service.DownloadService"/>
 
-        <receiver android:name="com.fw.bn.AdReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-        <activity android:name="com.fw.bn.WebViewActivity"
-                  android:configChanges="keyboardHidden|orientation" />
-
     </application>
 
 </manifest>
