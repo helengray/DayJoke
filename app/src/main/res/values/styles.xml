@@ -55,7 +55,8 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowAnimationStyle">@style/dialogWindowAnim</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="colorAccent">@color/Grey_1000</item>
     </style>
     <style name="dialogWindowAnim" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/fade_in</item>

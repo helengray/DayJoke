@@ -21,7 +21,8 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/app_name"/>
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/action_welfare"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -30,7 +31,7 @@
             app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/white"
             app:tabIndicatorHeight="1dp"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             >
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +13,8 @@ import android.view.ViewGroup;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.api.APIManager;
 import com.helen.dayjoke.api.APIService;
-import com.helen.dayjoke.entity.JokeEn;
-import com.helen.dayjoke.entity.ResponseBodyEn;
-import com.helen.dayjoke.entity.ResponseEn;
-import com.helen.dayjoke.ui.adapter.JokePicAdapter;
-import com.helen.dayjoke.ui.adapter.JokeTextAdapter;
-import com.helen.dayjoke.ui.view.DividerItemDecoration;
+import com.helen.dayjoke.entity.Mito;
+import com.helen.dayjoke.ui.adapter.WelfareAdapter;
 import com.helen.dayjoke.ui.view.EmptyEmbeddedContainer;
 
 import java.util.ArrayList;
@@ -26,19 +22,27 @@ import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Helen on 2016/4/29.
+ * Created by Helen on 2016/5/24.
  *
  */
-public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,EmptyEmbeddedContainer.EmptyInterface{
-    private List<JokeEn> mJokeEnList = new ArrayList<>();
-    private JokePicAdapter mAdapter;
+public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,EmptyEmbeddedContainer.EmptyInterface{
+    private List<Mito> mMitos = new ArrayList<>();
+    private WelfareAdapter mAdapter;
     private SwipeRefreshLayout mRefreshLayout;
     private EmptyEmbeddedContainer mEmptyContainer;
     private int page = 1;
+    private int type = 0;
+
+    public static WelfareFragment newInstance(int type) {
+        Bundle args = new Bundle();
+        args.putInt("type",type);
+        WelfareFragment fragment = new WelfareFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -46,6 +50,7 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
         View view = inflater.inflate(R.layout.content_main,container,false);
         initView(view);
         initAPI();
+        type = getArguments().getInt("type",0);
         page = 1;
         requestData();
         return view;
@@ -53,10 +58,9 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void initView(View view){
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-        mAdapter = new JokePicAdapter(mJokeEnList);
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mAdapter = new WelfareAdapter(mMitos);
         mAdapter.setEmptyInterface(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -73,7 +77,8 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                int[] lastItem = layoutManager.findLastVisibleItemPositions(new int[layoutManager.getSpanCount()]);
+                lastVisibleItem = getMaxPosition(lastItem);
             }
         });
 
@@ -89,9 +94,24 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
         mRefreshLayout.setOnRefreshListener(this);
     }
 
+    /**
+     * 获得最大的位置
+     *
+     * @param positions
+     * @return
+     */
+    private int getMaxPosition(int[] positions) {
+        int size = positions.length;
+        int maxPosition = Integer.MIN_VALUE;
+        for (int i = 0; i < size; i++) {
+            maxPosition = Math.max(maxPosition, positions[i]);
+        }
+        return maxPosition;
+    }
+
 
     private APIService apiService;
-    private Subscriber<List<JokeEn>> subscriber;
+    private Subscriber<List<Mito>> subscriber;
 
     private void initAPI() {
         apiService = APIManager.getInstance().getAPIService();
@@ -99,7 +119,7 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void requestData() {
         if(subscriber == null || subscriber.isUnsubscribed()) {
-            subscriber = new Subscriber<List<JokeEn>>() {
+            subscriber = new Subscriber<List<Mito>>() {
                 @Override
                 public void onCompleted() {
                     mRefreshLayout.setRefreshing(false);
@@ -108,49 +128,46 @@ public class JokePicFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 @Override
                 public void onError(Throwable e) {
                     mRefreshLayout.setRefreshing(false);
-                    if (mJokeEnList.isEmpty()) {
+                    if (mMitos.isEmpty()) {
                         mRefreshLayout.setEnabled(false);
                         mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_RETRY);
                     }
                     if (page > 1) {
-                        mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_LOAD_FAIL);
+                        mAdapter.notifyDataSetChanged(WelfareAdapter.STATUS_LOAD_FAIL);
                     }
                 }
 
                 @Override
-                public void onNext(final List<JokeEn> jokeEns) {
+                public void onNext(final List<Mito> mitos) {
                     mRefreshLayout.setEnabled(true);
                     mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NORMAL);
-                    if (jokeEns != null) {
+                    if (mitos != null) {
                         if (page == 1) {
-                            mJokeEnList.clear();
+                            mMitos.clear();
                         }
-                        mJokeEnList.addAll(jokeEns);
-                        mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_NORMAL);
+                        mMitos.addAll(mitos);
+                        mAdapter.notifyDataSetChanged(WelfareAdapter.STATUS_NORMAL);
                     }
-                    if (mJokeEnList.isEmpty()) {
+                    if (mMitos.isEmpty()) {
                         mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NODATA);
                     }
                 }
             };
         }
-        apiService.getPicJoke(String.valueOf(page))
-                .map(new Func1<ResponseEn, List<JokeEn>>() {
-                    @Override
-                    public List<JokeEn> call(ResponseEn responseEn) {
-                        if(responseEn != null){
-                            ResponseBodyEn bodyEn = responseEn.getData();
-                            if(bodyEn != null){
-                                return bodyEn.getJokeEnList();
-                            }
-                        }
-                        return null;
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(subscriber);
+        if(type != 0) {
+            apiService.getMito("Content", "Index", "gengduolist", page, type)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .unsubscribeOn(Schedulers.io())
+                    .subscribe(subscriber);
+        }else {
+            apiService.getMitoRandom("Content","Index","suiji",page)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .unsubscribeOn(Schedulers.io())
+                    .subscribe(subscriber);
+        }
+
     }
 
     @Override

@@ -98,41 +98,43 @@ public class JokeTextFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     private void requestData() {
-        subscriber = new Subscriber<List<JokeEn>>() {
-            @Override
-            public void onCompleted() {
-                mRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mRefreshLayout.setRefreshing(false);
-                System.out.println(Log.getStackTraceString(e));
-                if(mJokeEnList.isEmpty()){
-                    mRefreshLayout.setEnabled(false);
-                    mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_RETRY);
+        if(subscriber == null || subscriber.isUnsubscribed()) {
+            subscriber = new Subscriber<List<JokeEn>>() {
+                @Override
+                public void onCompleted() {
+                    mRefreshLayout.setRefreshing(false);
                 }
-                if(page > 1){
-                    mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_LOAD_FAIL);
-                }
-            }
 
-            @Override
-            public void onNext(final List<JokeEn> jokeEns) {
-                mRefreshLayout.setEnabled(true);
-                mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NORMAL);
-                if(jokeEns != null){
-                    if(page == 1){
-                        mJokeEnList.clear();
+                @Override
+                public void onError(Throwable e) {
+                    mRefreshLayout.setRefreshing(false);
+                    System.out.println(Log.getStackTraceString(e));
+                    if (mJokeEnList.isEmpty()) {
+                        mRefreshLayout.setEnabled(false);
+                        mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_RETRY);
                     }
-                    mJokeEnList.addAll(jokeEns);
-                    mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_NORMAL);
+                    if (page > 1) {
+                        mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_LOAD_FAIL);
+                    }
                 }
-                if(mJokeEnList.isEmpty()){
-                    mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NODATA);
+
+                @Override
+                public void onNext(final List<JokeEn> jokeEns) {
+                    mRefreshLayout.setEnabled(true);
+                    mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NORMAL);
+                    if (jokeEns != null) {
+                        if (page == 1) {
+                            mJokeEnList.clear();
+                        }
+                        mJokeEnList.addAll(jokeEns);
+                        mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_NORMAL);
+                    }
+                    if (mJokeEnList.isEmpty()) {
+                        mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NODATA);
+                    }
                 }
-            }
-        };
+            };
+        }
         apiService.getTextJoke(String.valueOf(page))
                 .map(new Func1<ResponseEn, List<JokeEn>>() {
                     @Override

@@ -37,8 +37,8 @@
         android:layout_marginTop="5dp"
         app:actualImageScaleType="centerCrop"
         app:placeholderImage="@drawable/icon_smile_place"
-        app:placeholderImageScaleType="fitXY"
+        app:placeholderImageScaleType="centerInside"
         app:failureImage="@drawable/icon_loading_fail"
-        app:failureImageScaleType="fitXY"
+        app:failureImageScaleType="centerInside"
         />
 </LinearLayout>

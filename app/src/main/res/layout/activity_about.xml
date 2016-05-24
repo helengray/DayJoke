@@ -49,7 +49,7 @@
             android:text="@string/about_me"
             />
 
-        <com.andexert.library.RippleView
+        <com.helen.dayjoke.ui.view.RippleView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/RippleViewStyle"
@@ -88,11 +88,11 @@
                     android:visibility="gone"
                     />
             </LinearLayout>
-        </com.andexert.library.RippleView>
+        </com.helen.dayjoke.ui.view.RippleView>
 
         <View style="@style/LineStyle"/>
 
-        <com.andexert.library.RippleView
+        <com.helen.dayjoke.ui.view.RippleView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/RippleViewStyle"
@@ -119,11 +119,11 @@
                     android:text="@string/open_source"
                     />
             </LinearLayout>
-        </com.andexert.library.RippleView>
+        </com.helen.dayjoke.ui.view.RippleView>
 
         <View style="@style/LineStyle"/>
 
-        <com.andexert.library.RippleView
+        <com.helen.dayjoke.ui.view.RippleView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/RippleViewStyle"
@@ -150,6 +150,6 @@
                     android:text="@string/share_soft"
                     />
             </LinearLayout>
-        </com.andexert.library.RippleView>
+        </com.helen.dayjoke.ui.view.RippleView>
     </LinearLayout>
 </ScrollView>

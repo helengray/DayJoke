@@ -7,7 +7,16 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_welfare">福利</string>
+    <string name="da_mei">大胸妹</string>
+    <string name="xiao_qing_xin">小清新</string>
+    <string name="wen_yi">文艺</string>
+    <string name="xing_gan">性感</string>
+    <string name="da_chang_tui">大长腿</string>
+    <string name="hei_si">黑丝</string>
+    <string name="xiao_qiao_tun">小翘臀</string>
+    <string name="sui_ji">随机</string>
+
     <string name="quit">再按一次退出程序</string>
     <string name="error_quit">很抱歉，程序出现错误，即将退出…</string>
     <string name="joke_text">段子</string>
@@ -65,7 +74,7 @@
     <string name="open_source_content">
         \n
         ------------------\n
-        每日一笑\n
+        每日笑话\n
         ------------------\n
         https://github.com/helengray/DayJoke\n\n
         ------------------\n

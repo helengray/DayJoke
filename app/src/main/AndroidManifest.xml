@@ -60,6 +60,12 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.activity.WelfareActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <service android:name=".ui.service.DownloadService"/>
 
     </application>

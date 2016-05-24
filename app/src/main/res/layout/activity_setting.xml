@@ -35,7 +35,7 @@
 
     <View style="@style/LineStyle"/>
 
-    <com.andexert.library.RippleView
+    <com.helen.dayjoke.ui.view.RippleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/RippleViewStyle"
@@ -52,5 +52,5 @@
         android:paddingRight="15dp"
         android:text="@string/clear_cache"
         />
-    </com.andexert.library.RippleView>
+    </com.helen.dayjoke.ui.view.RippleView>
 </LinearLayout>

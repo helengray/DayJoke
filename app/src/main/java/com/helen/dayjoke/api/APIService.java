@@ -3,8 +3,11 @@ package com.helen.dayjoke.api;
 import com.helen.dayjoke.entity.BaseEn;
 import com.helen.dayjoke.entity.ConstellationEn;
 import com.helen.dayjoke.entity.FileBodyEn;
+import com.helen.dayjoke.entity.Mito;
 import com.helen.dayjoke.entity.ResponseEn;
 import com.helen.dayjoke.entity.constellation.VersionInfoResponseEn;
+
+import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -44,4 +47,9 @@ public interface APIService {
     @GET("https://api.bmob.cn/1/classes/VersionInfo")
     Observable<VersionInfoResponseEn> getVersionInfo(@Query("limit") int limit, @Query("order") String bql);
 
+    @GET("http://www.hbmeinv.com/index.php")
+    Observable<List<Mito>> getMitoRandom(@Query("m") String m, @Query("c") String c,@Query("a") String a,@Query("p") int page);
+
+    @GET("http://www.hbmeinv.com/index.php")
+    Observable<List<Mito>> getMito(@Query("m") String m, @Query("c") String c,@Query("a") String a,@Query("p") int page,@Query("catid") int type);
 }

@@ -36,7 +36,7 @@
         android:text="@string/hint_upload_log"
         style="@style/SubheadStyle"
         />
-    <com.andexert.library.RippleView
+    <com.helen.dayjoke.ui.view.RippleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/RippleViewStyle"
@@ -49,5 +49,5 @@
         style="@style/TitleStyle.Light"
         android:background="@drawable/bg_btn"
         android:text="@string/send"/>
-    </com.andexert.library.RippleView>
+    </com.helen.dayjoke.ui.view.RippleView>
 </LinearLayout>
