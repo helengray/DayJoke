@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".ui.application.DJApplication"
@@ -56,7 +57,7 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.activity.OpenSourceActivity"
-            android:label="@string/about"
+            android:label="@string/open_source"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
@@ -67,7 +68,23 @@
         </activity>
 
         <service android:name=".ui.service.DownloadService"/>
-
+        <!--有米广告-->
+        <activity
+            android:name="net.youmi.android.AdBrowser"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <service
+            android:name="net.youmi.android.AdService"
+            android:exported="false" >
+        </service>
+        <receiver
+            android:name="net.youmi.android.AdReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

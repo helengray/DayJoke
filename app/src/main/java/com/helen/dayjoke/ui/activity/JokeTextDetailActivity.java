@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
+
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
+import net.youmi.android.banner.AdViewListener;
 
 /**
  * Created by Helen on 2016/5/11.
@@ -20,7 +25,7 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     public static final String TAG = "ADView";
     public static final String KEY_DATA = "data";
     private JokeEn mJokeEn;
-    //private AdBanner adView;
+
     public static void launcher(Context context, JokeEn jokeEn){
         Intent intent = new Intent(context,JokeTextDetailActivity.class);
         intent.putExtra(KEY_DATA, (Parcelable) jokeEn);
@@ -45,22 +50,26 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     }
 
     private void initAD(){
-        /*adView = new AdBanner(this);
-        adView.setAppKey();
-        adView.setRecevieAdListener(new RecevieAdListener() {
+        AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+        adView.setVisibility(View.VISIBLE);
+        adView.setAdListener(new AdViewListener() {
             @Override
-            public void onSucessedRecevieAd(AdBanner adBanner) {
+            public void onReceivedAd(AdView adView) {
                 mAdLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onFailedToRecevieAd(AdBanner adBanner) {
-                mAdLayout.setVisibility(View.GONE);
+            public void onSwitchedAd(AdView adView) {
+            }
+
+            @Override
+            public void onFailedToReceivedAd(AdView adView) {
+                mAdLayout.setVisibility(View.INVISIBLE);
             }
         });
         RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        mAdLayout.addView(adView,rllp);*/
+        mAdLayout.addView(adView,rllp);
     }
 
 

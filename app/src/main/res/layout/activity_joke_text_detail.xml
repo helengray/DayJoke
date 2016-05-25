@@ -58,8 +58,8 @@
     </ScrollView>
     <RelativeLayout
         android:id="@+id/layout_ad"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="50dp"/>
 </RelativeLayout>

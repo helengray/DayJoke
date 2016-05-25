@@ -37,6 +37,10 @@ import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.helen.dayjoke.utils.MD5;
 import com.helen.dayjoke.utils.ToastUtil;
 
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
+import net.youmi.android.banner.AdViewListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -76,16 +80,6 @@ public class GalleryDialog extends Dialog {
 		
 		this.setOnDismissListener(mDismissListener);
 
-		OnCancelListener mCancelListener = new OnCancelListener() {
-
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				mImageUris.clear();
-				mAdLayout.removeAllViews();
-				//adView.destroy();
-			}
-		};
-		this.setOnCancelListener(mCancelListener);
 		setContentView(R.layout.gallery_dialog);
 		mTextTitle = (TextView) findViewById(R.id.tv_title);
 		mViewPager = (ViewPager)findViewById(R.id.gallery_dialog_view_pager);
@@ -96,24 +90,28 @@ public class GalleryDialog extends Dialog {
 		mSaveButton.setOnClickListener(mClickListener);
 		mAdLayout = (RelativeLayout) findViewById(R.id.layout_ad);
     }
-	//private AdBanner adView;
+
 	private void initAD() {
-		/*adView = new AdBanner(mContext);
-		adView.setAppKey("9d50bcc2d13c9160fcf2a3fd160252a6");
-		adView.setRecevieAdListener(new RecevieAdListener() {
+		AdView adView = new AdView(mContext, AdSize.FIT_SCREEN);
+		adView.setAdListener(new AdViewListener() {
 			@Override
-			public void onSucessedRecevieAd(AdBanner adBanner) {
+			public void onReceivedAd(AdView adView) {
 				mAdLayout.setVisibility(View.VISIBLE);
 			}
 
 			@Override
-			public void onFailedToRecevieAd(AdBanner adBanner) {
-				mAdLayout.setVisibility(View.GONE);
+			public void onSwitchedAd(AdView adView) {
+
+			}
+
+			@Override
+			public void onFailedToReceivedAd(AdView adView) {
+				mAdLayout.setVisibility(View.INVISIBLE);
 			}
 		});
 		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		mAdLayout.addView(adView,rllp);*/
+		mAdLayout.addView(adView,rllp);
 	}
 
 
@@ -276,7 +274,6 @@ public class GalleryDialog extends Dialog {
 					mAdapter.notifyDataSetChanged();
 				}
 				mAdLayout.removeAllViews();
-				//adView.destroy();
 			} catch (Exception e) {
 				FLog.e(TAG, e, ">>>>>>>>>> mDismissListener -- onDismiss() <<<<<<<<<<");
 			}

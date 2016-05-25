@@ -47,9 +47,11 @@ public interface APIService {
     @GET("https://api.bmob.cn/1/classes/VersionInfo")
     Observable<VersionInfoResponseEn> getVersionInfo(@Query("limit") int limit, @Query("order") String bql);
 
+    @Headers("Cache-Control: public, max-age=3600")//1小时
     @GET("http://www.hbmeinv.com/index.php")
     Observable<List<Mito>> getMitoRandom(@Query("m") String m, @Query("c") String c,@Query("a") String a,@Query("p") int page);
 
+    @Headers("Cache-Control: public, max-age=3600")//1小时
     @GET("http://www.hbmeinv.com/index.php")
     Observable<List<Mito>> getMito(@Query("m") String m, @Query("c") String c,@Query("a") String a,@Query("p") int page,@Query("catid") int type);
 }
