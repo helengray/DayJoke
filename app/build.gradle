@@ -41,21 +41,24 @@ android {
         abortOnError false
     }
 
+
     applicationVariants.all{variant->
         variant.outputs.each{output->
-			if(variant.buildType.name.equals('release')){
-				def oldFile = output.outputFile
-				def newName = 'dayjoke_V'+defaultConfig.versionName+'_'+getDate()+'-release.apk';
-				output.outputFile = new File(oldFile.parent,newName)
-			}
-            
+            if(variant.buildType.name.equals('release')) {
+                /*def oldFile = output.outputFile
+                def newName = 'dayjoke_V'+defaultConfig.versionName+'_'+getDate()+'-release.apk';
+                output.outputFile = new File(oldFile.parent, newName)*/
+                def oldFile = output.packageApplication.outputFile
+                def newName = 'dayjoke_V'+defaultConfig.versionName+'_'+getDate()+'-release.apk';
+                output.packageApplication.outputFile = new File(oldFile.parent, newName)
+            }
         }
     }
 }
 
 def getDate() {
     def date = new Date()
-    def formattedDate = date.format('yyyy_MM_dd_HH')
+    def formattedDate = date.format('yyyy_MM_dd')
     return formattedDate
 }
 
