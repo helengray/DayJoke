@@ -126,7 +126,12 @@ public class GalleryDialog extends Dialog {
 			initAD();
 			mImageUris.clear();
 			mImageUris.add(currentUri);
-			mTextTitle.setText(title);
+			if(TextUtils.isEmpty(title)){
+				mTextTitle.setVisibility(View.INVISIBLE);
+			}else {
+				mTextTitle.setVisibility(View.VISIBLE);
+				mTextTitle.setText(title);
+			}
 			mAdapter.notifyDataSetChanged();
 			mViewPager.setCurrentItem(0);
 			super.show();

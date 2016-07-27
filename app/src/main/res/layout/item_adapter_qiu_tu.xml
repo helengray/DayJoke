@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_left"
+    android:paddingRight="@dimen/margin_left"
+    android:paddingTop="@dimen/margin_top"
+    android:paddingBottom="@dimen/margin_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TitleStyle"
+        />
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:actualImageScaleType="centerCrop"
+        app:placeholderImage="@drawable/icon_smile_place"
+        app:placeholderImageScaleType="centerInside"
+        app:failureImage="@drawable/icon_loading_fail"
+        app:failureImageScaleType="centerInside"
+        app:viewAspectRatio="1.33"
+        />
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginStart="@dimen/margin_left"
+        android:text="xxxxxx"
+        android:gravity="right"
+        style="@style/CaptionStyle"/>
+
+</LinearLayout>

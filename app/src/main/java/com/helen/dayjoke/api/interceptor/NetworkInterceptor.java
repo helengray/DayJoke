@@ -1,5 +1,7 @@
 package com.helen.dayjoke.api.interceptor;
 
+import android.os.Build;
+
 import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.helen.dayjoke.utils.HLog;
 
@@ -23,6 +25,8 @@ public class NetworkInterceptor implements Interceptor {
         builder.addHeader("apikey","cd3546573f9f857c77f603aaa5f004f2");
         builder.addHeader("X-Bmob-Application-Id","893c2b4926e7201960116466fa76d2ca");
         builder.addHeader("X-Bmob-REST-API-Key","4688fb9639a6d64fae95f36f28f07a40");
+        builder.addHeader("Source","android_10.1.1");
+        builder.addHeader("Model", Build.MODEL);
         if(!EnvironmentUtil.isNetworkConnected()){
             builder.cacheControl(CacheControl.FORCE_CACHE);
         }

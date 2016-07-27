@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.api.APIManager;
 import com.helen.dayjoke.api.APIService;
-import com.helen.dayjoke.entity.Mito;
-import com.helen.dayjoke.ui.adapter.WelfareAdapter;
+import com.helen.dayjoke.entity.QiuTuEn;
+import com.helen.dayjoke.entity.ResultList;
+import com.helen.dayjoke.ui.adapter.JokeTextAdapter;
+import com.helen.dayjoke.ui.adapter.QiuTuAdapter;
+import com.helen.dayjoke.ui.view.DividerItemDecoration;
 import com.helen.dayjoke.ui.view.EmptyEmbeddedContainer;
 
 import java.util.ArrayList;
@@ -22,27 +25,19 @@ import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Helen on 2016/5/24.
+ * Created by Helen on 2016/4/29.
  *
  */
-public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,EmptyEmbeddedContainer.EmptyInterface{
-    private List<Mito> mMitos = new ArrayList<>();
-    private WelfareAdapter mAdapter;
+public class QiuTuFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,EmptyEmbeddedContainer.EmptyInterface{
+    private List<QiuTuEn> mQiuTuEnList = new ArrayList<>();
+    private QiuTuAdapter mAdapter;
     private SwipeRefreshLayout mRefreshLayout;
     private EmptyEmbeddedContainer mEmptyContainer;
     private int page = 1;
-    private int type = 0;
-
-    public static WelfareFragment newInstance(int type) {
-        Bundle args = new Bundle();
-        args.putInt("type",type);
-        WelfareFragment fragment = new WelfareFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Nullable
     @Override
@@ -50,7 +45,6 @@ public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRe
         View view = inflater.inflate(R.layout.content_main,container,false);
         initView(view);
         initAPI();
-        type = getArguments().getInt("type",0);
         page = 1;
         requestData();
         return view;
@@ -58,9 +52,11 @@ public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void initView(View view){
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new WelfareAdapter(mMitos);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        mAdapter = new QiuTuAdapter(mQiuTuEnList);
+        mAdapter.setEmptyInterface(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int lastVisibleItem = -1;
@@ -76,8 +72,7 @@ public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int[] lastItem = layoutManager.findLastVisibleItemPositions(new int[layoutManager.getSpanCount()]);
-                lastVisibleItem = getMaxPosition(lastItem);
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
             }
         });
 
@@ -93,24 +88,9 @@ public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRe
         mRefreshLayout.setOnRefreshListener(this);
     }
 
-    /**
-     * 获得最大的位置
-     *
-     * @param positions
-     * @return
-     */
-    private int getMaxPosition(int[] positions) {
-        int size = positions.length;
-        int maxPosition = Integer.MIN_VALUE;
-        for (int i = 0; i < size; i++) {
-            maxPosition = Math.max(maxPosition, positions[i]);
-        }
-        return maxPosition;
-    }
-
 
     private APIService apiService;
-    private Subscriber<List<Mito>> subscriber;
+    private Subscriber<List<QiuTuEn>> subscriber;
 
     private void initAPI() {
         apiService = APIManager.getInstance().getAPIService();
@@ -118,7 +98,7 @@ public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void requestData() {
         if(subscriber == null || subscriber.isUnsubscribed()) {
-            subscriber = new Subscriber<List<Mito>>() {
+            subscriber = new Subscriber<List<QiuTuEn>>() {
                 @Override
                 public void onCompleted() {
                     mRefreshLayout.setRefreshing(false);
@@ -127,46 +107,46 @@ public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 @Override
                 public void onError(Throwable e) {
                     mRefreshLayout.setRefreshing(false);
-                    if (mMitos.isEmpty()) {
+                    if (mQiuTuEnList.isEmpty()) {
                         mRefreshLayout.setEnabled(false);
                         mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_RETRY);
                     }
                     if (page > 1) {
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_LOAD_FAIL);
                     }
                 }
 
                 @Override
-                public void onNext(final List<Mito> mitos) {
+                public void onNext(final List<QiuTuEn> qiuTuEns) {
                     mRefreshLayout.setEnabled(true);
                     mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NORMAL);
-                    if (mitos != null) {
+                    if (qiuTuEns != null) {
                         if (page == 1) {
-                            mMitos.clear();
+                            mQiuTuEnList.clear();
                         }
-                        mMitos.addAll(mitos);
-                        mAdapter.notifyDataSetChanged();
+                        mQiuTuEnList.addAll(qiuTuEns);
+                        mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_NORMAL);
                     }
-                    if (mMitos.isEmpty()) {
+                    if (mQiuTuEnList.isEmpty()) {
                         mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NODATA);
                     }
                 }
             };
         }
-        if(type != 0) {
-            apiService.getMito("Content", "Index", "gengduolist", page, type)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .unsubscribeOn(Schedulers.io())
-                    .subscribe(subscriber);
-        }else {
-            apiService.getMitoRandom("Content","Index","suiji",page)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .unsubscribeOn(Schedulers.io())
-                    .subscribe(subscriber);
-        }
-
+        apiService.getQiuTu(page,15)
+                .map(new Func1<ResultList<QiuTuEn>, List<QiuTuEn>>() {
+                    @Override
+                    public List<QiuTuEn> call(ResultList<QiuTuEn> responseEn) {
+                        if(responseEn != null){
+                            return responseEn.getItems();
+                        }
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(subscriber);
     }
 
     @Override

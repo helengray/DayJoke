@@ -4,7 +4,9 @@ import com.helen.dayjoke.entity.BaseEn;
 import com.helen.dayjoke.entity.ConstellationEn;
 import com.helen.dayjoke.entity.FileBodyEn;
 import com.helen.dayjoke.entity.Mito;
+import com.helen.dayjoke.entity.QiuTuEn;
 import com.helen.dayjoke.entity.ResponseEn;
+import com.helen.dayjoke.entity.ResultList;
 import com.helen.dayjoke.entity.constellation.VersionInfoResponseEn;
 
 import java.util.List;
@@ -54,4 +56,7 @@ public interface APIService {
     @Headers("Cache-Control: public, max-age=3600")//1小时
     @GET("http://www.hbmeinv.com/index.php")
     Observable<List<Mito>> getMito(@Query("m") String m, @Query("c") String c,@Query("a") String a,@Query("p") int page,@Query("catid") int type);
+
+    @GET("http://m2.qiushibaike.com/article/list/imgrank")
+    Observable<ResultList<QiuTuEn>> getQiuTu(@Query("page") int page, @Query("count") int count);
 }
