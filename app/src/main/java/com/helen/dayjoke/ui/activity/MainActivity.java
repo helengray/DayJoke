@@ -27,6 +27,7 @@ import com.helen.dayjoke.ui.fragment.JokePicFragment;
 import com.helen.dayjoke.ui.fragment.JokeTextFragment;
 import com.helen.dayjoke.ui.fragment.QiuTuFragment;
 import com.helen.dayjoke.ui.fragment.VideoFragment;
+import com.helen.dayjoke.ui.fragment.WelfareContentFragment;
 import com.helen.dayjoke.utils.SPUtil;
 import com.helen.dayjoke.utils.ToastUtil;
 
@@ -83,7 +84,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         pagerAdapter.addFragment(new VideoFragment(),getString(R.string.video));
         pagerAdapter.addFragment(new JokePicFragment(),getString(R.string.joke_pic));
         pagerAdapter.addFragment(new QiuTuFragment(),getString(R.string.qiu_tu));
+        pagerAdapter.addFragment(new WelfareContentFragment(),getString(R.string.action_welfare));
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -113,7 +116,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initConsData(Constellation.CONSTELLATIONS[mConsIndex]);
     }
 
-    private APIService mAPIService;
     private Subscriber<ConstellationEn> mSubscriber;
 
     private void initConsData(final Constellation constellation) {
@@ -146,8 +148,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             };
         }
-        mAPIService = APIManager.getInstance().getAPIService();
-        mAPIService.getConstellation(constellation.getName(), ConstellationEn.TYPE_TODAY)
+        APIService APIService = APIManager.getInstance().getAPIService();
+        APIService.getConstellation(constellation.getName(), ConstellationEn.TYPE_TODAY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mSubscriber);
@@ -200,7 +202,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
