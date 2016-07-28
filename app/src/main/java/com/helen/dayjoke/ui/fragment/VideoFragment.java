@@ -12,12 +12,9 @@ import android.view.ViewGroup;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.api.APIManager;
-import com.helen.dayjoke.api.APIService;
-import com.helen.dayjoke.entity.QiuTuEn;
-import com.helen.dayjoke.entity.ResultList;
+import com.helen.dayjoke.entity.VideoEn;
 import com.helen.dayjoke.ui.adapter.JokeTextAdapter;
-import com.helen.dayjoke.ui.adapter.QiuTuAdapter;
-import com.helen.dayjoke.ui.application.Constant;
+import com.helen.dayjoke.ui.adapter.VideoAdapter;
 import com.helen.dayjoke.ui.view.DividerItemDecoration;
 import com.helen.dayjoke.ui.view.EmptyEmbeddedContainer;
 
@@ -25,17 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Helen on 2016/4/29.
  *
  */
-public class QiuTuFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,EmptyEmbeddedContainer.EmptyInterface{
-    private List<QiuTuEn> mQiuTuEnList = new ArrayList<>();
-    private QiuTuAdapter mAdapter;
+public class VideoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,EmptyEmbeddedContainer.EmptyInterface{
+    private List<VideoEn> mVideoEnList = new ArrayList<>();
+    private VideoAdapter mAdapter;
     private SwipeRefreshLayout mRefreshLayout;
     private EmptyEmbeddedContainer mEmptyContainer;
     private int page = 1;
@@ -56,7 +50,7 @@ public class QiuTuFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-        mAdapter = new QiuTuAdapter(mQiuTuEnList);
+        mAdapter = new VideoAdapter(mVideoEnList);
         mAdapter.setEmptyInterface(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -90,16 +84,16 @@ public class QiuTuFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
 
-    private APIService apiService;
-    private Subscriber<List<QiuTuEn>> subscriber;
+    private APIManager apiService;
+    private Subscriber<List<VideoEn>> subscriber;
 
     private void initAPI() {
-        apiService = APIManager.getInstance().getAPIService();
+        apiService = APIManager.getInstance();
     }
 
     private void requestData() {
         if(subscriber == null || subscriber.isUnsubscribed()) {
-            subscriber = new Subscriber<List<QiuTuEn>>() {
+            subscriber = new Subscriber<List<VideoEn>>() {
                 @Override
                 public void onCompleted() {
                     mRefreshLayout.setRefreshing(false);
@@ -108,7 +102,7 @@ public class QiuTuFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 @Override
                 public void onError(Throwable e) {
                     mRefreshLayout.setRefreshing(false);
-                    if (mQiuTuEnList.isEmpty()) {
+                    if (mVideoEnList.isEmpty()) {
                         mRefreshLayout.setEnabled(false);
                         mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_RETRY);
                     }
@@ -118,36 +112,23 @@ public class QiuTuFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
 
                 @Override
-                public void onNext(final List<QiuTuEn> qiuTuEns) {
+                public void onNext(final List<VideoEn> videoEns) {
                     mRefreshLayout.setEnabled(true);
                     mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NORMAL);
-                    if (qiuTuEns != null) {
+                    if (videoEns != null && !videoEns.isEmpty()) {
                         if (page == 1) {
-                            mQiuTuEnList.clear();
+                            mVideoEnList.clear();
                         }
-                        mQiuTuEnList.addAll(qiuTuEns);
+                        mVideoEnList.addAll(videoEns);
                         mAdapter.notifyDataSetChanged(JokeTextAdapter.STATUS_NORMAL);
                     }
-                    if (mQiuTuEnList.isEmpty()) {
+                    if (mVideoEnList.isEmpty()) {
                         mEmptyContainer.setType(EmptyEmbeddedContainer.EmptyStyle.EmptyStyle_NODATA);
                     }
                 }
             };
         }
-        apiService.getQiuTu(page, Constant.PAGE_SIZE)
-                .map(new Func1<ResultList<QiuTuEn>, List<QiuTuEn>>() {
-                    @Override
-                    public List<QiuTuEn> call(ResultList<QiuTuEn> responseEn) {
-                        if(responseEn != null){
-                            return responseEn.getItems();
-                        }
-                        return null;
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(subscriber);
+        apiService.getVideo(page,subscriber);
     }
 
     @Override

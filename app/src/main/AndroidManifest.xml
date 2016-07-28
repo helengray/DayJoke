@@ -66,6 +66,9 @@
             android:name=".ui.activity.WelfareActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".ui.activity.VideoPlayActivity"
+                  android:screenOrientation="portrait"
+            />
 
         <service android:name=".ui.service.DownloadService"/>
         <!--有米广告-->

@@ -26,6 +26,7 @@ import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.fragment.JokePicFragment;
 import com.helen.dayjoke.ui.fragment.JokeTextFragment;
 import com.helen.dayjoke.ui.fragment.QiuTuFragment;
+import com.helen.dayjoke.ui.fragment.VideoFragment;
 import com.helen.dayjoke.utils.SPUtil;
 import com.helen.dayjoke.utils.ToastUtil;
 
@@ -79,6 +80,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         JokePagerAdapter pagerAdapter = new JokePagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new JokeTextFragment(),getString(R.string.joke_text));
+        pagerAdapter.addFragment(new VideoFragment(),getString(R.string.video));
         pagerAdapter.addFragment(new JokePicFragment(),getString(R.string.joke_pic));
         pagerAdapter.addFragment(new QiuTuFragment(),getString(R.string.qiu_tu));
         viewPager.setAdapter(pagerAdapter);

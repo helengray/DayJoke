@@ -20,6 +20,7 @@
     <string name="quit">再按一次退出程序</string>
     <string name="error_quit">很抱歉，程序出现错误，即将退出…</string>
     <string name="joke_text">段子</string>
+    <string name="video">视频</string>
     <string name="joke_pic">趣图</string>
     <string name="qiu_tu">糗图</string>
     <string name="save_image">保存图片</string>

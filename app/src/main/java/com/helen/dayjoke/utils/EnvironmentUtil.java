@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.telephony.TelephonyManager;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -145,5 +146,10 @@ public class EnvironmentUtil {
             }
         }
         return mScreenPoint;
+    }
+
+    public static String getIMEI(){
+        TelephonyManager tm = (TelephonyManager) DJApplication.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getDeviceId();
     }
 }

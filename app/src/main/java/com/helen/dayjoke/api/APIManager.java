@@ -3,16 +3,23 @@ package com.helen.dayjoke.api;
 import com.helen.dayjoke.BuildConfig;
 import com.helen.dayjoke.api.interceptor.LogInterceptor;
 import com.helen.dayjoke.api.interceptor.NetworkInterceptor;
+import com.helen.dayjoke.entity.ResultList;
+import com.helen.dayjoke.entity.VideoEn;
 import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Helen on 2016/4/27.
@@ -52,5 +59,22 @@ public class APIManager {
 
     public APIService getAPIService(){
         return getService(APIService.class);
+    }
+
+    public void getVideo(int page,Subscriber<List<VideoEn>> subscriber){
+        getAPIService().getVideo(page,Constant.PAGE_SIZE)
+                .map(new Func1<ResultList<VideoEn>, List<VideoEn>>() {
+                    @Override
+                    public List<VideoEn> call(ResultList<VideoEn> videoEnResultList) {
+                        if(videoEnResultList != null){
+                            return videoEnResultList.getItems();
+                        }
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(subscriber);
     }
 }

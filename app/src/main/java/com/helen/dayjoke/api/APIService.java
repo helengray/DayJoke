@@ -7,6 +7,7 @@ import com.helen.dayjoke.entity.Mito;
 import com.helen.dayjoke.entity.QiuTuEn;
 import com.helen.dayjoke.entity.ResponseEn;
 import com.helen.dayjoke.entity.ResultList;
+import com.helen.dayjoke.entity.VideoEn;
 import com.helen.dayjoke.entity.constellation.VersionInfoResponseEn;
 
 import java.util.List;
@@ -59,4 +60,7 @@ public interface APIService {
 
     @GET("http://m2.qiushibaike.com/article/list/imgrank")
     Observable<ResultList<QiuTuEn>> getQiuTu(@Query("page") int page, @Query("count") int count);
+
+    @GET("http://m2.qiushibaike.com/article/list/video")
+    Observable<ResultList<VideoEn>> getVideo(@Query("page") int page, @Query("count") int count);
 }
