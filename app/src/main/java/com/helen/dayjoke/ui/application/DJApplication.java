@@ -5,7 +5,9 @@ import android.app.Application;
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.helen.dayjoke.BuildConfig;
 import com.helen.dayjoke.utils.EnvironmentUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Helen on 2016/4/28.
@@ -26,6 +28,15 @@ public class DJApplication extends Application{
         instance = this;
         HCrashHandler.init(this);
         initFresco();
+        initUmeng();
+    }
+
+    private void initUmeng() {
+        MobclickAgent.setDebugMode(BuildConfig.DEBUG);
+        //MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.enableEncrypt(true);
+        MobclickAgent.setCheckDevice(false);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
 

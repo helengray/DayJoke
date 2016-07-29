@@ -40,6 +40,7 @@ import com.helen.dayjoke.utils.ToastUtil;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -102,6 +103,7 @@ public class GalleryDialog extends Dialog {
 
 			@Override
 			public void onADReceiv() {
+				MobclickAgent.onEvent(mContext,Constant.Event.EVENT_ID_AD_SHOW);
 				mAdLayout.setVisibility(View.VISIBLE);
 				HLog.d(TAG,"onADReceive");
 			}
@@ -151,6 +153,7 @@ public class GalleryDialog extends Dialog {
 
 	public void showGallery(Uri currentUri,String title){
 		try {
+			MobclickAgent.onEvent(mContext,Constant.Event.EVENT_ID_GALLERY);
 			initAD();
 			mImageUris.clear();
 			mImageUris.add(currentUri);

@@ -28,6 +28,7 @@ import com.helen.dayjoke.utils.TimeUtil;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -161,9 +162,9 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 			public void onNoAD(int i) {
 				HLog.d(TAG,"onNoAD code="+i);
 			}
-
 			@Override
 			public void onADReceiv() {
+				MobclickAgent.onEvent(VideoPlayActivity.this, Constant.Event.EVENT_ID_AD_SHOW);
 				mAdLayout.setVisibility(View.VISIBLE);
 				HLog.d(TAG,"onADReceive");
 			}

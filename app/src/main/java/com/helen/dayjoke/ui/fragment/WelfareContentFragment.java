@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.Mito;
 import com.helen.dayjoke.ui.adapter.JokePagerAdapter;
+import com.helen.dayjoke.ui.application.Constant;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Helen on 2016/4/29.
@@ -40,6 +42,48 @@ public class WelfareContentFragment extends Fragment{
         pagerAdapter.addFragment(WelfareFragment.newInstance(Mito.TYPE_XIAO_QIAO_TUN),getString(R.string.xiao_qiao_tun));
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(4);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_SUIJI);
+                        break;
+                    case 1:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_DAXIONG);
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_QINGXIN);
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_WENYI);
+                        break;
+                    case 4:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_XINGGAN);
+                        break;
+                    case 5:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_DACHUANGTUI);
+                        break;
+                    case 6:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_HEISI);
+                        break;
+                    case 7:
+                        MobclickAgent.onEvent(getActivity(), Constant.Event.EVENT_ID_TAB_WELFARE_QIAOTUN);
+                        break;
+                    default:break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }

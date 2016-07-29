@@ -86,4 +86,6 @@ dependencies {
     //compile 'com.facebook.fresco:webpsupport:0.10.0'
     compile 'com.jaredrummler:material-spinner:1.0.6'
     compile 'com.android.support:cardview-v7:23.3.0'
+    //友盟统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

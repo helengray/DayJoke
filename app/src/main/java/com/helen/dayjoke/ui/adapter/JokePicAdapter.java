@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.GalleryDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class JokePicAdapter extends BaseRecyclerAdapter<JokeEn>{
     private View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            MobclickAgent.onEvent(v.getContext(), Constant.Event.EVENT_ID_TAB_PIC_DETAIL);
             if(mGalleryDialog == null){
                 mGalleryDialog = new GalleryDialog(v.getContext());
             }

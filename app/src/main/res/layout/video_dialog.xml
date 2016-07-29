@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/Grey_1000"
     >
     <RelativeLayout
         android:id="@+id/layout_top"
@@ -12,7 +13,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/layout_ad"
-        android:background="@color/Grey_1000"
         android:orientation="vertical">
 
         <FrameLayout

@@ -17,6 +17,7 @@ import com.helen.dayjoke.utils.HLog;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Helen on 2016/5/11.
@@ -61,6 +62,7 @@ public class JokeTextDetailActivity extends TitlebarActivity{
 
             @Override
             public void onADReceiv() {
+                MobclickAgent.onEvent(JokeTextDetailActivity.this, Constant.Event.EVENT_ID_AD_SHOW);
                 mAdLayout.setVisibility(View.VISIBLE);
                 HLog.d(TAG,"onADReceive");
             }
@@ -106,7 +108,6 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     protected void onDestroy() {
         mAdLayout.removeAllViews();
         mAdView.destroy();
-        //adView.destroy();
         super.onDestroy();
     }
 
