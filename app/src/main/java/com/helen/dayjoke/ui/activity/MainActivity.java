@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView mTextViewMatchFriends;
 
     private int mConsIndex = 0;
+    private boolean isOpenWelfare;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,22 +71,49 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        isOpenWelfare = SPUtil.getInstance().getBoolean(Constant.KEY_OPEN_WELFARE);
+        if(isOpenWelfare){
+            initJokeView(true);
+        }else {
+            requestConfig();
+        }
 
-        initJokeView();
         initConstellationView();
+    }
+
+    private void requestConfig() {
+        APIManager.getInstance().getWelfareConfig(new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                initJokeView(false);
+            }
+
+            @Override
+            public void onNext(Boolean isOpenWelfare) {
+                initJokeView(isOpenWelfare);
+                SPUtil.getInstance().putBoolean(Constant.KEY_OPEN_WELFARE,isOpenWelfare).commit();
+            }
+        });
     }
 
     /**
      * 初始化首页笑话
      */
-    private void initJokeView(){
+    private void initJokeView(boolean isOpenWelfare){
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         JokePagerAdapter pagerAdapter = new JokePagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new JokeTextFragment(),getString(R.string.joke_text));
         pagerAdapter.addFragment(new VideoFragment(),getString(R.string.video));
         pagerAdapter.addFragment(new JokePicFragment(),getString(R.string.joke_pic));
         pagerAdapter.addFragment(new QiuTuFragment(),getString(R.string.qiu_tu));
-        pagerAdapter.addFragment(new WelfareContentFragment(),getString(R.string.action_welfare));
+        if(isOpenWelfare) {
+            pagerAdapter.addFragment(new WelfareContentFragment(), getString(R.string.action_welfare));
+        }
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

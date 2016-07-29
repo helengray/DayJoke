@@ -3,8 +3,10 @@ package com.helen.dayjoke.api;
 import com.helen.dayjoke.BuildConfig;
 import com.helen.dayjoke.api.interceptor.LogInterceptor;
 import com.helen.dayjoke.api.interceptor.NetworkInterceptor;
+import com.helen.dayjoke.entity.BombConfig;
 import com.helen.dayjoke.entity.ResultList;
 import com.helen.dayjoke.entity.VideoEn;
+import com.helen.dayjoke.entity.constellation.BombResponseEn;
 import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 
@@ -70,6 +72,32 @@ public class APIManager {
                             return videoEnResultList.getItems();
                         }
                         return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(subscriber);
+    }
+
+    /**
+     * 获取福利入口配置
+     */
+    public void getWelfareConfig(Subscriber<Boolean> subscriber){
+        getAPIService().getConfig(1)
+                .map(new Func1<BombResponseEn<BombConfig>, List<BombConfig>>() {
+                    @Override
+                    public List<BombConfig> call(BombResponseEn<BombConfig> bombConfigBombResponseEn) {
+                        return bombConfigBombResponseEn.results;
+                    }
+                })
+                .map(new Func1<List<BombConfig>, Boolean>() {
+                    @Override
+                    public Boolean call(List<BombConfig> bombConfigs) {
+                        if(bombConfigs != null && !bombConfigs.isEmpty()){
+                            return bombConfigs.get(0).isOpenWelfare();
+                        }
+                        return Boolean.FALSE;
                     }
                 })
                 .subscribeOn(Schedulers.io())

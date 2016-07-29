@@ -15,7 +15,7 @@ import com.helen.dayjoke.R;
 import com.helen.dayjoke.api.APIManager;
 import com.helen.dayjoke.api.APIService;
 import com.helen.dayjoke.entity.VersionInfo;
-import com.helen.dayjoke.entity.constellation.VersionInfoResponseEn;
+import com.helen.dayjoke.entity.constellation.BombResponseEn;
 import com.helen.dayjoke.ui.service.DownloadService;
 import com.helen.dayjoke.ui.view.MaterialDialog;
 import com.helen.dayjoke.utils.ToastUtil;
@@ -71,9 +71,9 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
 
     private void checkUpdate(){
         mAPIService.getVersionInfo(1,"-version")
-                .map(new Func1<VersionInfoResponseEn, List<VersionInfo>>() {
+                .map(new Func1<BombResponseEn<VersionInfo>, List<VersionInfo>>() {
                     @Override
-                    public List<VersionInfo> call(VersionInfoResponseEn responseEn) {
+                    public List<VersionInfo> call(BombResponseEn<VersionInfo> responseEn) {
                         return responseEn.results;
                     }
                 })

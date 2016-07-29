@@ -43,7 +43,7 @@ public class Constant {
     public static final String APP_ID="1105324471";
 
     public static final int PAGE_SIZE = 15;
-
+    public static final String KEY_OPEN_WELFARE = "isOpenWelfare";
     /**友盟事件ID*/
     public class Event{
         /**文本笑话tab*/

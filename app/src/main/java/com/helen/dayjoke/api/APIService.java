@@ -1,14 +1,16 @@
 package com.helen.dayjoke.api;
 
 import com.helen.dayjoke.entity.BaseEn;
+import com.helen.dayjoke.entity.BombConfig;
 import com.helen.dayjoke.entity.ConstellationEn;
 import com.helen.dayjoke.entity.FileBodyEn;
 import com.helen.dayjoke.entity.Mito;
 import com.helen.dayjoke.entity.QiuTuEn;
 import com.helen.dayjoke.entity.ResponseEn;
 import com.helen.dayjoke.entity.ResultList;
+import com.helen.dayjoke.entity.VersionInfo;
 import com.helen.dayjoke.entity.VideoEn;
-import com.helen.dayjoke.entity.constellation.VersionInfoResponseEn;
+import com.helen.dayjoke.entity.constellation.BombResponseEn;
 
 import java.util.List;
 
@@ -48,7 +50,10 @@ public interface APIService {
     Observable<BaseEn> postFeedback(@Body RequestBody feedBack);
 
     @GET("https://api.bmob.cn/1/classes/VersionInfo")
-    Observable<VersionInfoResponseEn> getVersionInfo(@Query("limit") int limit, @Query("order") String bql);
+    Observable<BombResponseEn<VersionInfo>> getVersionInfo(@Query("limit") int limit, @Query("order") String bql);
+
+    @GET("https://api.bmob.cn/1/classes/Config")
+    Observable<BombResponseEn<BombConfig>> getConfig(@Query("limit") int limit);
 
     @Headers("Cache-Control: public, max-age=3600")//1小时
     @GET("http://www.hbmeinv.com/index.php")
