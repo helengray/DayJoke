@@ -71,18 +71,18 @@
             />
 
         <service android:name=".ui.service.DownloadService"/>
-        <!--有米广告-->
+        <!-- 有米广告 -->
         <activity
-            android:name="net.youmi.android.AdBrowser"
+            android:name="th.ds.wa.BV"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <service
-            android:name="net.youmi.android.AdService"
+            android:name="th.ds.wa.ED"
             android:exported="false" >
         </service>
         <receiver
-            android:name="net.youmi.android.AdReceiver" >
+            android:name="th.ds.wa.TR" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <data android:scheme="package" />

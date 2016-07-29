@@ -22,12 +22,13 @@ import android.widget.VideoView;
 import com.facebook.common.logging.FLog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.helen.dayjoke.R;
+import com.helen.dayjoke.ui.application.DJApplication;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.TimeUtil;
 
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
+import th.ds.wa.normal.banner.AdViewListener;
+import th.ds.wa.normal.banner.BannerManager;
 
 
 /**
@@ -155,10 +156,28 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 	}
 
 	private void initAD() {
-		AdView adView = new AdView(mContext, AdSize.FIT_SCREEN);
-		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		mAdLayout.addView(adView, rllp);
+		View adView = BannerManager.getInstance(DJApplication.getInstance()).getBanner(this);
+		if(adView != null) {
+			BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
+				@Override
+				public void onReceivedAd() {
+					HLog.d(TAG,"onReceivedAd");
+				}
+
+				@Override
+				public void onSwitchedAd() {
+					HLog.d(TAG,"onSwitchedAd");
+				}
+
+				@Override
+				public void onFailedToReceivedAd() {
+					HLog.d(TAG,"onFailedToReceivedAd");
+				}
+			});
+			RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+					RelativeLayout.LayoutParams.WRAP_CONTENT);
+			mAdLayout.addView(adView, rllp);
+		}
 	}
 
 

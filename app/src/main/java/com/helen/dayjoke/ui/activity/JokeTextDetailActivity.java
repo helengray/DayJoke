@@ -12,10 +12,11 @@ import android.widget.TextView;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
+import com.helen.dayjoke.ui.application.DJApplication;
+import com.helen.dayjoke.utils.HLog;
 
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
-import net.youmi.android.banner.AdViewListener;
+import th.ds.wa.normal.banner.AdViewListener;
+import th.ds.wa.normal.banner.BannerManager;
 
 /**
  * Created by Helen on 2016/5/11.
@@ -50,26 +51,28 @@ public class JokeTextDetailActivity extends TitlebarActivity{
     }
 
     private void initAD(){
-        AdView adView = new AdView(this, AdSize.FIT_SCREEN);
-        adView.setVisibility(View.VISIBLE);
-        adView.setAdListener(new AdViewListener() {
-            @Override
-            public void onReceivedAd(AdView adView) {
-                mAdLayout.setVisibility(View.VISIBLE);
-            }
+        View adView = BannerManager.getInstance(DJApplication.getInstance()).getBanner(this);
+        if(adView != null) {
+            BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
+                @Override
+                public void onReceivedAd() {
+                    HLog.d(TAG,"onReceivedAd");
+                }
 
-            @Override
-            public void onSwitchedAd(AdView adView) {
-            }
+                @Override
+                public void onSwitchedAd() {
+                    HLog.d(TAG,"onSwitchedAd");
+                }
 
-            @Override
-            public void onFailedToReceivedAd(AdView adView) {
-                mAdLayout.setVisibility(View.INVISIBLE);
-            }
-        });
-        RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        mAdLayout.addView(adView,rllp);
+                @Override
+                public void onFailedToReceivedAd() {
+                    HLog.d(TAG,"onFailedToReceivedAd");
+                }
+            });
+            RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            mAdLayout.addView(adView, rllp);
+        }
     }
 
 

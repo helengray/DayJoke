@@ -31,15 +31,13 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.ui.application.Constant;
+import com.helen.dayjoke.ui.application.DJApplication;
 import com.helen.dayjoke.ui.view.photodraweeview.OnViewTapListener;
 import com.helen.dayjoke.ui.view.photodraweeview.PhotoDraweeView;
 import com.helen.dayjoke.utils.EnvironmentUtil;
+import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.MD5;
 import com.helen.dayjoke.utils.ToastUtil;
-
-import net.youmi.android.banner.AdSize;
-import net.youmi.android.banner.AdView;
-import net.youmi.android.banner.AdViewListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,6 +50,8 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import th.ds.wa.normal.banner.AdViewListener;
+import th.ds.wa.normal.banner.BannerManager;
 
 
 /**
@@ -92,26 +92,28 @@ public class GalleryDialog extends Dialog {
     }
 
 	private void initAD() {
-		AdView adView = new AdView(mContext, AdSize.FIT_SCREEN);
-		adView.setAdListener(new AdViewListener() {
-			@Override
-			public void onReceivedAd(AdView adView) {
-				mAdLayout.setVisibility(View.VISIBLE);
-			}
+		View adView = BannerManager.getInstance(DJApplication.getInstance()).getBanner(getContext());
+		if(adView != null) {
+			BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
+				@Override
+				public void onReceivedAd() {
+					HLog.d(TAG,"onReceivedAd");
+				}
 
-			@Override
-			public void onSwitchedAd(AdView adView) {
+				@Override
+				public void onSwitchedAd() {
+					HLog.d(TAG,"onSwitchedAd");
+				}
 
-			}
-
-			@Override
-			public void onFailedToReceivedAd(AdView adView) {
-				mAdLayout.setVisibility(View.INVISIBLE);
-			}
-		});
-		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		mAdLayout.addView(adView,rllp);
+				@Override
+				public void onFailedToReceivedAd() {
+					HLog.d(TAG,"onFailedToReceivedAd");
+				}
+			});
+			RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+					RelativeLayout.LayoutParams.WRAP_CONTENT);
+			mAdLayout.addView(adView, rllp);
+		}
 	}
 
 
