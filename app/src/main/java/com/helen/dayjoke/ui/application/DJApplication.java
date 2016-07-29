@@ -7,6 +7,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.helen.dayjoke.BuildConfig;
 import com.helen.dayjoke.utils.EnvironmentUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import th.ds.wa.AdManager;
 
@@ -30,6 +31,15 @@ public class DJApplication extends Application{
         HCrashHandler.init(this);
         initFresco();
         initAd();
+        initUmeng();
+    }
+
+    private void initUmeng() {
+        MobclickAgent.setDebugMode(BuildConfig.DEBUG);
+        //MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.enableEncrypt(true);
+        MobclickAgent.setCheckDevice(false);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
     private void initAd() {

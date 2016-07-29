@@ -22,10 +22,12 @@ import android.widget.VideoView;
 import com.facebook.common.logging.FLog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.helen.dayjoke.R;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.application.DJApplication;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.TimeUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import th.ds.wa.normal.banner.AdViewListener;
 import th.ds.wa.normal.banner.BannerManager;
@@ -161,6 +163,7 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 			BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
 				@Override
 				public void onReceivedAd() {
+					MobclickAgent.onEvent(mContext, Constant.Event.EVENT_ID_AD_SHOW);
 					HLog.d(TAG,"onReceivedAd");
 				}
 

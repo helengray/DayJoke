@@ -60,7 +60,7 @@ public class WelfareFragment extends Fragment implements SwipeRefreshLayout.OnRe
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new WelfareAdapter(mMitos);
+        mAdapter = new WelfareAdapter(mMitos,type);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int lastVisibleItem = -1;

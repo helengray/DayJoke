@@ -16,6 +16,8 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.VideoEn;
 import com.helen.dayjoke.ui.activity.VideoPlayActivity;
+import com.helen.dayjoke.ui.application.Constant;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -59,6 +61,7 @@ public class VideoAdapter extends BaseRecyclerAdapter<VideoEn> implements View.O
     }
     @Override
     public void onClick(View v) {
+        MobclickAgent.onEvent(v.getContext(), Constant.Event.EVENT_ID_TAB_VIDEO_DETAIL);
         VideoEn videoEn = (VideoEn) v.getTag(R.id.pic);
         VideoPlayActivity.launcher(v.getContext(),videoEn.getHigh_url(),videoEn.getLow_url(),videoEn.getPic_url());
     }

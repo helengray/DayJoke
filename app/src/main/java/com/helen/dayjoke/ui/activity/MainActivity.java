@@ -30,6 +30,7 @@ import com.helen.dayjoke.ui.fragment.VideoFragment;
 import com.helen.dayjoke.ui.fragment.WelfareContentFragment;
 import com.helen.dayjoke.utils.SPUtil;
 import com.helen.dayjoke.utils.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -87,6 +88,39 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         pagerAdapter.addFragment(new WelfareContentFragment(),getString(R.string.action_welfare));
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        MobclickAgent.onEvent(MainActivity.this, Constant.Event.EVENT_ID_TAB_TEXT);
+                        break;
+                    case 1:
+                        MobclickAgent.onEvent(MainActivity.this, Constant.Event.EVENT_ID_TAB_VIDEO);
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(MainActivity.this, Constant.Event.EVENT_ID_TAB_PIC);
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(MainActivity.this, Constant.Event.EVENT_ID_TAB_QIU);
+                        break;
+                    case 4:
+                        MobclickAgent.onEvent(MainActivity.this, Constant.Event.EVENT_ID_TAB_WELFARE);
+                        break;
+                    default:break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }

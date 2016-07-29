@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
 import com.helen.dayjoke.ui.activity.JokeTextDetailActivity;
+import com.helen.dayjoke.ui.application.Constant;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -65,6 +67,7 @@ public class JokeTextAdapter extends BaseRecyclerAdapter<JokeEn>{
         @Override
         public void onClick(View v) {
             JokeTextDetailActivity.launcher(v.getContext(),mBean);
+            MobclickAgent.onEvent(v.getContext(), Constant.Event.EVENT_ID_TAB_TEXT_DETAIL);
         }
     }
 

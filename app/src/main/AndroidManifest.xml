@@ -18,7 +18,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="579ac92667e58e1122000e5d"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="default"/>
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"

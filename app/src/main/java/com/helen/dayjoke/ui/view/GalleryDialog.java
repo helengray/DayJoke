@@ -38,6 +38,7 @@ import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.MD5;
 import com.helen.dayjoke.utils.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -97,6 +98,7 @@ public class GalleryDialog extends Dialog {
 			BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
 				@Override
 				public void onReceivedAd() {
+					MobclickAgent.onEvent(mContext,Constant.Event.EVENT_ID_AD_SHOW);
 					HLog.d(TAG,"onReceivedAd");
 				}
 
@@ -125,6 +127,7 @@ public class GalleryDialog extends Dialog {
 
 	public void showGallery(Uri currentUri,String title){
 		try {
+			MobclickAgent.onEvent(mContext,Constant.Event.EVENT_ID_GALLERY);
 			initAD();
 			mImageUris.clear();
 			mImageUris.add(currentUri);

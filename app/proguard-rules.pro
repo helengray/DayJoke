@@ -91,3 +91,14 @@ public static final android.os.Parcelable$Creator *;
 -keep class com.jaredrummler.materialspinner.** {
  *;
 }
+#友盟
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keep public class com.helen.dayjoke.R$*{
+public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

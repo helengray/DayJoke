@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.facebook.common.logging.FLog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -73,5 +74,17 @@ public class BaseActivity extends AppCompatActivity {
         }catch (Exception e){
             FLog.e("finishAll", e, null);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

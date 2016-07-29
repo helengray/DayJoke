@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.application.DJApplication;
 import com.helen.dayjoke.utils.HLog;
+import com.umeng.analytics.MobclickAgent;
 
 import th.ds.wa.normal.banner.AdViewListener;
 import th.ds.wa.normal.banner.BannerManager;
@@ -56,6 +58,7 @@ public class JokeTextDetailActivity extends TitlebarActivity{
             BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
                 @Override
                 public void onReceivedAd() {
+                    MobclickAgent.onEvent(JokeTextDetailActivity.this, Constant.Event.EVENT_ID_AD_SHOW);
                     HLog.d(TAG,"onReceivedAd");
                 }
 
