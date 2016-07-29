@@ -40,6 +40,8 @@ public class Constant {
     public static final String AD_ID_TEXT_DETAIL = "2529153";
     /**图片笑话详情广告*/
     public static final String AD_ID_PIC_DETAIL = "2529625";
+    public static final String APP_ID="1105324471";
 
     public static final int PAGE_SIZE = 15;
+
 }

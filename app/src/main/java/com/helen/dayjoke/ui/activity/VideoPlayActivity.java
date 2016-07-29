@@ -1,6 +1,5 @@
 package com.helen.dayjoke.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -22,13 +21,13 @@ import android.widget.VideoView;
 import com.facebook.common.logging.FLog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.helen.dayjoke.R;
-import com.helen.dayjoke.ui.application.DJApplication;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.TimeUtil;
-
-import th.ds.wa.normal.banner.AdViewListener;
-import th.ds.wa.normal.banner.BannerManager;
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.BannerADListener;
+import com.qq.e.ads.banner.BannerView;
 
 
 /**
@@ -36,10 +35,9 @@ import th.ds.wa.normal.banner.BannerManager;
  */
 public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPreparedListener,MediaPlayer.OnErrorListener,MediaPlayer.OnCompletionListener,
 		MediaPlayer.OnInfoListener,MediaPlayer.OnBufferingUpdateListener,View.OnClickListener{
-	public static final String TAG_STARY = "start";
+	public static final String TAG_START = "start";
 	public static final String TAG_PAUSE = "pause";
-	private static final String TAG = "GalleryDialog.java";
-	private Activity mContext;
+	private static final String TAG = "VideoPlayActivity.java";
 	private RelativeLayout mAdLayout;
 	private VideoView mVideoView;
 	private SimpleDraweeView mDraweeView;
@@ -72,7 +70,6 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 	}
 
 	private void init() {
-		mContext = this;
 		Intent intent = getIntent();
 		picUrl = intent.getStringExtra("pic");
 
@@ -137,6 +134,7 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 		try {
 			mVideoView.stopPlayback();
 			mAdLayout.removeAllViews();
+			mAdView.destroy();
 			if(mRefreshRunnable != null){
 				mHandlerRefresh.removeCallbacks(mRefreshRunnable);
 			}
@@ -154,30 +152,56 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 			mHandlerRefresh.postDelayed(this,1000);
 		}
 	}
-
+	private BannerView mAdView;
 	private void initAD() {
-		View adView = BannerManager.getInstance(DJApplication.getInstance()).getBanner(this);
-		if(adView != null) {
-			BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
-				@Override
-				public void onReceivedAd() {
-					HLog.d(TAG,"onReceivedAd");
-				}
+		mAdView = new BannerView(this, ADSize.BANNER, Constant.APP_ID, "9050517347719444");
+		mAdView.setRefresh(5);
+		mAdView.setADListener(new BannerADListener() {
+			@Override
+			public void onNoAD(int i) {
+				HLog.d(TAG,"onNoAD code="+i);
+			}
 
-				@Override
-				public void onSwitchedAd() {
-					HLog.d(TAG,"onSwitchedAd");
-				}
+			@Override
+			public void onADReceiv() {
+				mAdLayout.setVisibility(View.VISIBLE);
+				HLog.d(TAG,"onADReceive");
+			}
 
-				@Override
-				public void onFailedToReceivedAd() {
-					HLog.d(TAG,"onFailedToReceivedAd");
-				}
-			});
-			RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-					RelativeLayout.LayoutParams.WRAP_CONTENT);
-			mAdLayout.addView(adView, rllp);
-		}
+			@Override
+			public void onADExposure() {
+				HLog.d(TAG,"onADExposure");
+			}
+
+			@Override
+			public void onADClosed() {
+				HLog.d(TAG,"onADClosed");
+			}
+
+			@Override
+			public void onADClicked() {
+				HLog.d(TAG,"onADClicked");
+			}
+
+			@Override
+			public void onADLeftApplication() {
+				HLog.d(TAG,"onADLeftApplication");
+			}
+
+			@Override
+			public void onADOpenOverlay() {
+				HLog.d(TAG,"onADOpenOverlay");
+			}
+
+			@Override
+			public void onADCloseOverlay() {
+				HLog.d(TAG,"onADCloseOverlay");
+			}
+		});
+		mAdView.loadAD();
+		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		mAdLayout.addView(mAdView, rllp);
 	}
 
 
@@ -274,7 +298,7 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 		int id = v.getId();
 		if(id == R.id.iv_menu){
 			String tag = (String) v.getTag();
-			if(tag.equals(TAG_STARY)){
+			if(tag.equals(TAG_START)){
 				setMenuPauseStatus();
 				onPausePlay();
 			}else if(tag.equals(TAG_PAUSE)){
@@ -290,7 +314,7 @@ public class VideoPlayActivity extends BaseActivity implements MediaPlayer.OnPre
 	}
 
 	private void setMenuStartStatus(){
-		mBtnMenu.setTag(TAG_STARY);
+		mBtnMenu.setTag(TAG_START);
 		mBtnMenu.setImageResource(android.R.drawable.ic_media_pause);
 	}
 }

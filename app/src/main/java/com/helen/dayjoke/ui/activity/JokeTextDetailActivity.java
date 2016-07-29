@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.entity.JokeEn;
-import com.helen.dayjoke.ui.application.DJApplication;
+import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.utils.HLog;
-
-import th.ds.wa.normal.banner.AdViewListener;
-import th.ds.wa.normal.banner.BannerManager;
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.BannerADListener;
+import com.qq.e.ads.banner.BannerView;
 
 /**
  * Created by Helen on 2016/5/11.
@@ -49,36 +49,63 @@ public class JokeTextDetailActivity extends TitlebarActivity{
         initData();
         initAD();
     }
-
+    private BannerView mAdView;
     private void initAD(){
-        View adView = BannerManager.getInstance(DJApplication.getInstance()).getBanner(this);
-        if(adView != null) {
-            BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
-                @Override
-                public void onReceivedAd() {
-                    HLog.d(TAG,"onReceivedAd");
-                }
+        mAdView = new BannerView(this, ADSize.BANNER, Constant.APP_ID, "8020516397617412");
+        mAdView.setRefresh(5);
+        mAdView.setADListener(new BannerADListener() {
+            @Override
+            public void onNoAD(int i) {
+                HLog.d(TAG,"onNoAD code="+i);
+            }
 
-                @Override
-                public void onSwitchedAd() {
-                    HLog.d(TAG,"onSwitchedAd");
-                }
+            @Override
+            public void onADReceiv() {
+                mAdLayout.setVisibility(View.VISIBLE);
+                HLog.d(TAG,"onADReceive");
+            }
 
-                @Override
-                public void onFailedToReceivedAd() {
-                    HLog.d(TAG,"onFailedToReceivedAd");
-                }
-            });
-            RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-            mAdLayout.addView(adView, rllp);
-        }
+            @Override
+            public void onADExposure() {
+                HLog.d(TAG,"onADExposure");
+            }
+
+            @Override
+            public void onADClosed() {
+                HLog.d(TAG,"onADClosed");
+            }
+
+            @Override
+            public void onADClicked() {
+                HLog.d(TAG,"onADClicked");
+            }
+
+            @Override
+            public void onADLeftApplication() {
+                HLog.d(TAG,"onADLeftApplication");
+            }
+
+            @Override
+            public void onADOpenOverlay() {
+                HLog.d(TAG,"onADOpenOverlay");
+            }
+
+            @Override
+            public void onADCloseOverlay() {
+                HLog.d(TAG,"onADCloseOverlay");
+            }
+        });
+        mAdView.loadAD();
+        RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        mAdLayout.addView(mAdView, rllp);
     }
 
 
     @Override
     protected void onDestroy() {
         mAdLayout.removeAllViews();
+        mAdView.destroy();
         //adView.destroy();
         super.onDestroy();
     }
