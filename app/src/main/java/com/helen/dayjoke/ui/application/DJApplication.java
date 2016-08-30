@@ -9,7 +9,6 @@ import com.helen.dayjoke.BuildConfig;
 import com.helen.dayjoke.utils.EnvironmentUtil;
 import com.umeng.analytics.MobclickAgent;
 
-import th.ds.wa.AdManager;
 
 /**
  * Created by Helen on 2016/4/28.
@@ -30,7 +29,6 @@ public class DJApplication extends Application{
         instance = this;
         HCrashHandler.init(this);
         initFresco();
-        initAd();
         initUmeng();
     }
 
@@ -42,9 +40,6 @@ public class DJApplication extends Application{
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
-    private void initAd() {
-        AdManager.getInstance(this).init("00ed769919def25a", "b011534b98a0de87",false, BuildConfig.DEBUG);
-    }
 
     private void initFresco(){
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(this)

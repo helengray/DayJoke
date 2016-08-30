@@ -76,23 +76,12 @@
             />
 
         <service android:name=".ui.service.DownloadService"/>
-        <!-- 有米广告 -->
+        <!--广告 -->
+        <meta-data android:name="BaiduMobAd_APP_ID" android:value="fd55d53d"/>
         <activity
-            android:name="th.ds.wa.BV"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
-        <service
-            android:name="th.ds.wa.ED"
-            android:exported="false" >
-        </service>
-        <receiver
-            android:name="th.ds.wa.TR" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
+            android:name="com.baidu.mobads.AppActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>

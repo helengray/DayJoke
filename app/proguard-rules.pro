@@ -66,11 +66,6 @@ public static final android.os.Parcelable$Creator *;
 
 -dontwarn okio.**
 -dontwarn javax.annotation.**
-#有米广告sdk
--dontwarn net.youmi.android.**
--keep class net.youmi.android.** {
-    *;
-}
 
 -keep class okhttp3.** {
  *;
@@ -101,4 +96,8 @@ public static final int *;
 -keepclassmembers enum * {
     public static **[] values();
     public static ** valueOf(java.lang.String);
+}
+
+-keep class com.baidu.**{
+    public protected *;
 }

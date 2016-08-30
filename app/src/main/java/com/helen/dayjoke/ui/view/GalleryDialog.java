@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.mobads.AdView;
+import com.baidu.mobads.AdViewListener;
 import com.facebook.binaryresource.FileBinaryResource;
 import com.facebook.cache.common.SimpleCacheKey;
 import com.facebook.common.logging.FLog;
@@ -31,7 +33,6 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.ui.application.Constant;
-import com.helen.dayjoke.ui.application.DJApplication;
 import com.helen.dayjoke.ui.view.photodraweeview.OnViewTapListener;
 import com.helen.dayjoke.ui.view.photodraweeview.PhotoDraweeView;
 import com.helen.dayjoke.utils.EnvironmentUtil;
@@ -39,6 +40,8 @@ import com.helen.dayjoke.utils.HLog;
 import com.helen.dayjoke.utils.MD5;
 import com.helen.dayjoke.utils.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,8 +54,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import th.ds.wa.normal.banner.AdViewListener;
-import th.ds.wa.normal.banner.BannerManager;
 
 
 /**
@@ -93,29 +94,45 @@ public class GalleryDialog extends Dialog {
     }
 
 	private void initAD() {
-		View adView = BannerManager.getInstance(DJApplication.getInstance()).getBanner(getContext());
-		if(adView != null) {
-			BannerManager.getInstance(DJApplication.getInstance()).setAdListener(new AdViewListener() {
-				@Override
-				public void onReceivedAd() {
-					MobclickAgent.onEvent(mContext,Constant.Event.EVENT_ID_AD_SHOW);
-					HLog.d(TAG,"onReceivedAd");
-				}
+		String adPlaceId = "2758123";
+		AdView adView = new AdView(mContext,adPlaceId);
+		adView.setListener(new AdViewListener() {
+			@Override
+			public void onAdReady(AdView adView) {
 
-				@Override
-				public void onSwitchedAd() {
-					HLog.d(TAG,"onSwitchedAd");
-				}
+			}
 
-				@Override
-				public void onFailedToReceivedAd() {
-					HLog.d(TAG,"onFailedToReceivedAd");
-				}
-			});
-			RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-					RelativeLayout.LayoutParams.WRAP_CONTENT);
-			mAdLayout.addView(adView, rllp);
-		}
+			@Override
+			public void onAdShow(JSONObject jsonObject) {
+				mAdLayout.setVisibility(View.VISIBLE);
+				MobclickAgent.onEvent(mContext, Constant.Event.EVENT_ID_AD_SHOW);
+				HLog.d(TAG,"onAdShow");
+			}
+
+			@Override
+			public void onAdClick(JSONObject jsonObject) {
+
+			}
+
+			@Override
+			public void onAdFailed(String s) {
+				HLog.d(TAG,"onFailedToReceivedAd error = "+s);
+			}
+
+			@Override
+			public void onAdSwitch() {
+				HLog.d(TAG,"onSwitchedAd");
+			}
+
+			@Override
+			public void onAdClose(JSONObject jsonObject) {
+
+			}
+		});
+
+		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		mAdLayout.addView(adView, rllp);
 	}
 
 
