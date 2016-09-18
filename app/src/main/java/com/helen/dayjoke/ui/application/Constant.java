@@ -43,6 +43,7 @@ public class Constant {
 
     public static final int PAGE_SIZE = 15;
     public static final String KEY_OPEN_WELFARE = "isOpenWelfare";
+    public static final String KEY_IGNORE_VERSION = "ignore_version";
     /**友盟事件ID*/
     public class Event{
         /**文本笑话tab*/

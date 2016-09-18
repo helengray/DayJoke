@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +17,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.helen.dayjoke.BuildConfig;
 import com.helen.dayjoke.R;
 import com.helen.dayjoke.api.APIManager;
 import com.helen.dayjoke.api.APIService;
 import com.helen.dayjoke.entity.ConstellationEn;
+import com.helen.dayjoke.entity.VersionInfo;
+import com.helen.dayjoke.entity.constellation.BombResponseEn;
 import com.helen.dayjoke.entity.constellation.Constellation;
 import com.helen.dayjoke.ui.adapter.JokePagerAdapter;
 import com.helen.dayjoke.ui.application.Constant;
@@ -28,12 +32,17 @@ import com.helen.dayjoke.ui.fragment.JokeTextFragment;
 import com.helen.dayjoke.ui.fragment.QiuTuFragment;
 import com.helen.dayjoke.ui.fragment.VideoFragment;
 import com.helen.dayjoke.ui.fragment.WelfareContentFragment;
+import com.helen.dayjoke.ui.service.DownloadService;
+import com.helen.dayjoke.ui.view.MaterialDialog;
 import com.helen.dayjoke.utils.SPUtil;
 import com.helen.dayjoke.utils.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.List;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -54,17 +63,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView mTextViewMatchFriends;
 
     private int mConsIndex = 0;
+    APIService APIService ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        updateCheck();
     }
 
     private void initView(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        APIService = APIManager.getInstance().getAPIService();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -218,7 +229,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             };
         }
-        APIService APIService = APIManager.getInstance().getAPIService();
         APIService.getConstellation(constellation.getName(), ConstellationEn.TYPE_TODAY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -229,6 +239,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onDestroy() {
         if(mSubscriber != null && !mSubscriber.isUnsubscribed()){
             mSubscriber.unsubscribe();
+        }
+        if(mVersionInfoSubscriber != null && !mVersionInfoSubscriber.isUnsubscribed()){
+            mVersionInfoSubscriber.unsubscribe();
         }
         super.onDestroy();
     }
@@ -308,5 +321,78 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             }
         }
+    }
+
+
+    private Subscriber<VersionInfo> mVersionInfoSubscriber;
+    private void updateCheck(){
+        if(mVersionInfoSubscriber == null || mVersionInfoSubscriber.isUnsubscribed()){
+            mVersionInfoSubscriber = new Subscriber<VersionInfo>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onNext(final VersionInfo info) {
+                    if(info != null) {
+                        String version = BuildConfig.VERSION_NAME;
+                        final String newVersion = info.getVersion();
+                        if (newVersion.compareTo(version) > 0 && !newVersion.equals(SPUtil.getInstance().getString(Constant.KEY_IGNORE_VERSION))) {
+                            final MaterialDialog materialDialog = new MaterialDialog(MainActivity.this);
+                            materialDialog.setTitle(getString(R.string.alert));
+                            materialDialog.setPositiveButton(getString(R.string.update), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(MainActivity.this, DownloadService.class);
+                                    intent.putExtra(DownloadService.KEY_URL,info.getApkFile().getUrl());
+                                    startService(intent);
+                                    materialDialog.dismiss();
+                                }
+                            });
+                            materialDialog.setNegativeButton(getString(R.string.cancel), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    materialDialog.dismiss();
+                                }
+                            });
+                            materialDialog.setNeutralButton(getString(R.string.ignore), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    materialDialog.dismiss();
+                                    SPUtil.getInstance().putString(Constant.KEY_IGNORE_VERSION,newVersion).commit();
+                                }
+                            });
+                            materialDialog.setMessage(Html.fromHtml(info.getUpdateContent()));
+                            materialDialog.show();
+                        }
+                    }
+                }
+            };
+        }
+        APIService.getVersionInfo(1,"-version")
+                .map(new Func1<BombResponseEn<VersionInfo>, List<VersionInfo>>() {
+                    @Override
+                    public List<VersionInfo> call(BombResponseEn<VersionInfo> responseEn) {
+                        return responseEn.results;
+                    }
+                })
+                .map(new Func1<List<VersionInfo>, VersionInfo>() {
+                    @Override
+                    public VersionInfo call(List<VersionInfo> versionInfos) {
+                        if(versionInfos != null && !versionInfos.isEmpty()){
+                            return versionInfos.get(0);
+                        }
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mVersionInfoSubscriber);
     }
 }

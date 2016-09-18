@@ -82,7 +82,6 @@ public class AboutActivity extends TitlebarActivity implements View.OnClickListe
                     public String call(List<VersionInfo> versionInfos) {
                         if(versionInfos != null && !versionInfos.isEmpty()){
                             mVersionInfo = versionInfos.get(0);
-                            System.out.println(mVersionInfo);
                             return mVersionInfo.getVersion();
                         }
                         return BuildConfig.VERSION_NAME;

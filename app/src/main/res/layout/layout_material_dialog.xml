@@ -79,6 +79,14 @@
                 tools:text="CANCEL"/>
 
             <Button
+                android:id="@+id/btn_i"
+                style="@style/ActionButton"
+                android:textColor="@color/black_de"
+                android:stateListAnimator="@null"
+                android:visibility="gone"
+                tools:text="IGNORE"/>
+
+            <Button
                 android:id="@+id/btn_p"
                 style="@style/ActionButton"
                 android:layout_marginLeft="2dp"

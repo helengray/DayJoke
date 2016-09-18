@@ -44,15 +44,16 @@ public class MaterialDialog {
     private Button mPositiveButton;
     private LinearLayout.LayoutParams mLayoutParams;
     private Button mNegativeButton;
+    private Button mNeutralButton;
     private boolean mHasShow = false;
     private int mBackgroundResId = -1;
     private Drawable mBackgroundDrawable;
     private View mMessageContentView;
     private int mMessageContentViewResId;
     private DialogInterface.OnDismissListener mOnDismissListener;
-    private int pId = -1, nId = -1;
-    private String pText, nText;
-    View.OnClickListener pListener, nListener;
+    private int pId = -1, nId = -1,iId = -1;
+    private String pText, nText,iText;
+    View.OnClickListener pListener, nListener,iListener;
 
 
     public MaterialDialog(Context context) {
@@ -211,6 +212,19 @@ public class MaterialDialog {
         return this;
     }
 
+    public MaterialDialog setNeutralButton(int resId, final View.OnClickListener listener) {
+        this.iId = resId;
+        this.iListener = listener;
+        return this;
+    }
+
+
+    public MaterialDialog setNeutralButton(String text, final View.OnClickListener listener) {
+        this.iText = text;
+        this.iListener = listener;
+        return this;
+    }
+
 
     /**
      * Sets whether this dialog is canceled when touched outside the window's
@@ -273,6 +287,7 @@ public class MaterialDialog {
             mButtonLayout = (LinearLayout) mAlertDialogWindow.findViewById(R.id.buttonLayout);
             mPositiveButton = (Button) mButtonLayout.findViewById(R.id.btn_p);
             mNegativeButton = (Button) mButtonLayout.findViewById(R.id.btn_n);
+            mNeutralButton = (Button) mButtonLayout.findViewById(R.id.btn_i);
             mMessageContentRoot = (ViewGroup) mAlertDialogWindow.findViewById(
                     R.id.message_content_root);
             if (mView != null) {
@@ -312,6 +327,14 @@ public class MaterialDialog {
                     mNegativeButton.setElevation(0);
                 }
             }
+            if (iId != -1) {
+                mNeutralButton.setVisibility(View.VISIBLE);
+                mNeutralButton.setText(iId);
+                mNeutralButton.setOnClickListener(iListener);
+                if (isLollipop()) {
+                    mNeutralButton.setElevation(0);
+                }
+            }
             if (!isNullOrEmpty(pText)) {
                 mPositiveButton.setVisibility(View.VISIBLE);
                 mPositiveButton.setText(pText);
@@ -329,11 +352,22 @@ public class MaterialDialog {
                     mNegativeButton.setElevation(0);
                 }
             }
+            if (!isNullOrEmpty(iText)) {
+                mNeutralButton.setVisibility(View.VISIBLE);
+                mNeutralButton.setText(iText);
+                mNeutralButton.setOnClickListener(iListener);
+                if (isLollipop()) {
+                    mNeutralButton.setElevation(0);
+                }
+            }
             if (isNullOrEmpty(pText) && pId == -1) {
                 mPositiveButton.setVisibility(View.GONE);
             }
             if (isNullOrEmpty(nText) && nId == -1) {
                 mNegativeButton.setVisibility(View.GONE);
+            }
+            if (isNullOrEmpty(iText) && iId == -1) {
+                mNeutralButton.setVisibility(View.GONE);
             }
             if (mBackgroundResId != -1) {
                 LinearLayout linearLayout = (LinearLayout) mAlertDialogWindow.findViewById(
