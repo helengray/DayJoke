@@ -5,13 +5,16 @@ package com.helen.dayjoke.entity;
  *
  */
 public class BombConfig extends BaseEn{
-    private boolean isOpenWelfare;
+    private Boolean isOpenWelfare;
 
-    public boolean isOpenWelfare() {
+    public Boolean isOpenWelfare() {
+        if(isOpenWelfare == null){
+            return Boolean.FALSE;
+        }
         return isOpenWelfare;
     }
 
-    public void setOpenWelfare(boolean openWelfare) {
+    public void setOpenWelfare(Boolean openWelfare) {
         isOpenWelfare = openWelfare;
     }
 }

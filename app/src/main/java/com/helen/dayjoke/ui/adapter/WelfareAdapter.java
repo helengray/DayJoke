@@ -15,6 +15,7 @@ import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.GalleryDialog;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,9 +74,32 @@ public class WelfareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Mito mito = (Mito) v.getTag();
             String url = mito.getThumb() ;
             String title = mito.getTitle();
-            mGalleryDialog.showGallery(Uri.parse(url),title);
+            mGalleryDialog.showGallery(getImageUris(),Uri.parse(url),getTitles());
         }
     };
+
+    private List<Uri> getImageUris(){
+        List<Uri> imgs = new ArrayList<>();
+        if(mMitos != null && !mMitos.isEmpty()){
+            int size = mMitos.size();
+            for (int i=0;i<size;i++){
+                Uri uri = Uri.parse(mMitos.get(i).getThumb());
+                imgs.add(uri);
+            }
+        }
+        return imgs;
+    }
+
+    private List<String> getTitles(){
+        List<String> titles = new ArrayList<>();
+        if(mMitos != null && !mMitos.isEmpty()){
+            int size = mMitos.size();
+            for (int i=0;i<size;i++){
+                titles.add(mMitos.get(i).getTitle());
+            }
+        }
+        return titles;
+    }
 
 
     @Override

@@ -14,6 +14,7 @@ import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.GalleryDialog;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,9 +45,32 @@ public class JokePicAdapter extends BaseRecyclerAdapter<JokeEn>{
             JokeEn jokeEn = (JokeEn) v.getTag(R.id.pic);
             String url = jokeEn.getImg() ;
             String title = jokeEn.getTitle();
-            mGalleryDialog.showGallery(Uri.parse(url),title);
+            mGalleryDialog.showGallery(getImageUris(),Uri.parse(url),getTitles());
         }
     };
+
+    private List<Uri> getImageUris(){
+        List<Uri> imgs = new ArrayList<>();
+        if(mDataList != null && !mDataList.isEmpty()){
+            int size = mDataList.size();
+            for (int i=0;i<size;i++){
+                Uri uri = Uri.parse(mDataList.get(i).getImg());
+                imgs.add(uri);
+            }
+        }
+        return imgs;
+    }
+
+    private List<String> getTitles(){
+        List<String> titles = new ArrayList<>();
+        if(mDataList != null && !mDataList.isEmpty()){
+            int size = mDataList.size();
+            for (int i=0;i<size;i++){
+                titles.add(mDataList.get(i).getTitle());
+            }
+        }
+        return titles;
+    }
 
 
     @Override

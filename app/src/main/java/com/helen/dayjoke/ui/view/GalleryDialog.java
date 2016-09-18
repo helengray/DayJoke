@@ -66,6 +66,7 @@ public class GalleryDialog extends Dialog {
 	private TextView mSaveButton;
 	private ViewPager mViewPager;
 	private List<Uri> mImageUris = new ArrayList<Uri>();
+	private List<String> mTitles = new ArrayList<>();
 	private ViewPagerAdapter mAdapter ;
 	private TextView mTextTitle;
 	private RelativeLayout mAdLayout;
@@ -85,15 +86,34 @@ public class GalleryDialog extends Dialog {
 		setContentView(R.layout.gallery_dialog);
 		mTextTitle = (TextView) findViewById(R.id.tv_title);
 		mViewPager = (ViewPager)findViewById(R.id.gallery_dialog_view_pager);
+		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+				if(mTitles.size() > position) {
+					showTitle(mTitles.get(position));
+				}
+				initAD();
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+
+			}
+		});
 		mAdapter = new ViewPagerAdapter(getContext(),mImageUris);
 		mViewPager.setAdapter(mAdapter);
-		mViewPager.setEnabled(false);
 		mSaveButton = (TextView) findViewById(R.id.btn_save);
 		mSaveButton.setOnClickListener(mClickListener);
 		mAdLayout = (RelativeLayout) findViewById(R.id.layout_ad);
     }
 
 	private void initAD() {
+		mAdLayout.removeAllViews();
 		String adPlaceId = "2758123";
 		AdView adView = new AdView(mContext,adPlaceId);
 		adView.setListener(new AdViewListener() {
@@ -142,26 +162,45 @@ public class GalleryDialog extends Dialog {
     }
 
 
-	public void showGallery(Uri currentUri,String title){
+	public void showGallery(List<Uri> imageUris,Uri currentUri, List<String> titles){
 		try {
 			MobclickAgent.onEvent(mContext,Constant.Event.EVENT_ID_GALLERY);
 			initAD();
+			int position = 0;
+			int tempPosition = 0;
+			if(mImageUris == null){
+				mImageUris = new ArrayList<Uri>();
+			}
 			mImageUris.clear();
-			mImageUris.add(currentUri);
-			if(TextUtils.isEmpty(title)){
-				mTextTitle.setVisibility(View.INVISIBLE);
-			}else {
-				mTextTitle.setVisibility(View.VISIBLE);
-				mTextTitle.setText(title);
+			for(Uri uri : imageUris){
+				mImageUris.add(uri);
+				if(uri.toString().equals(currentUri.toString())){
+					position = tempPosition;
+				}
+				tempPosition++;
+			}
+			if(titles != null) {
+				mTitles.clear();
+				mTitles.addAll(titles);
+				showTitle(mTitles.get(position));
 			}
 			mAdapter.notifyDataSetChanged();
-			mViewPager.setCurrentItem(0);
+			mViewPager.setCurrentItem(position>0?position:0);
 			super.show();
 		} catch (Exception e) {
 			//do nothing
 			e.printStackTrace();
 		}
 
+	}
+
+	private void showTitle(String title){
+		if(TextUtils.isEmpty(title)){
+			mTextTitle.setVisibility(View.INVISIBLE);
+		}else {
+			mTextTitle.setVisibility(View.VISIBLE);
+			mTextTitle.setText(title);
+		}
 	}
 
 

@@ -14,6 +14,7 @@ import com.helen.dayjoke.ui.application.Constant;
 import com.helen.dayjoke.ui.view.GalleryDialog;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +52,19 @@ public class QiuTuAdapter extends BaseRecyclerAdapter<QiuTuEn> implements View.O
         }
         QiuTuEn qiuTuEn = (QiuTuEn) v.getTag(R.id.pic);
         String url = qiuTuEn.getPic() ;
-        mGalleryDialog.showGallery(Uri.parse(url),null);
+        mGalleryDialog.showGallery(getImageUris(),Uri.parse(url),null);
+    }
+
+    private List<Uri> getImageUris(){
+        List<Uri> imgs = new ArrayList<>();
+        if(mDataList != null && !mDataList.isEmpty()){
+            int size = mDataList.size();
+            for (int i=0;i<size;i++){
+                Uri uri = Uri.parse(mDataList.get(i).getPic());
+                imgs.add(uri);
+            }
+        }
+        return imgs;
     }
 
     /**

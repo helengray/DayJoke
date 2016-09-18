@@ -17,7 +17,7 @@ import java.util.List;
  *
  */
 public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private List<D> mDataList;
+    protected List<D> mDataList;
     private static final int TYPE_CONTENT = 1;
     private static final int TYPE_FOOTER = 2;
 

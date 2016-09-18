@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if(isOpenWelfare){
             initJokeView(true);
         }else {
+            initJokeView(false);
             requestConfig();
         }
 
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             @Override
             public void onError(Throwable e) {
-
+                e.printStackTrace();
             }
 
             @Override
