@@ -159,6 +159,22 @@ public class QiuTuFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(mAdapter.getGalleryDialog() != null){
+            mAdapter.getGalleryDialog().startTimer();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mAdapter.getGalleryDialog() != null){
+            mAdapter.getGalleryDialog().stopTimer();
+        }
+    }
+
+    @Override
     public void onRefresh() {
         page = 1;
         requestData();

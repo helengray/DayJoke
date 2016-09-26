@@ -44,6 +44,9 @@ public class QiuTuAdapter extends BaseRecyclerAdapter<QiuTuEn> implements View.O
         viewHolder.mPic.setTag(R.id.pic,qiuTuEn);
     }
     private GalleryDialog mGalleryDialog;
+    public GalleryDialog getGalleryDialog() {
+        return mGalleryDialog;
+    }
     @Override
     public void onClick(View v) {
         MobclickAgent.onEvent(v.getContext(), Constant.Event.EVENT_ID_TAB_QIU_DETAIL);

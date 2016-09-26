@@ -37,6 +37,9 @@ public class WelfareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private GalleryDialog mGalleryDialog;
+    public GalleryDialog getGalleryDialog() {
+        return mGalleryDialog;
+    }
     private View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

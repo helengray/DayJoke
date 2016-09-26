@@ -10,9 +10,12 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -49,6 +52,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -70,17 +74,53 @@ public class GalleryDialog extends Dialog {
 	private ViewPagerAdapter mAdapter ;
 	private TextView mTextTitle;
 	private RelativeLayout mAdLayout;
+	private Handler mHandler = new Handler();
+	private RefreshRunnable mRunnable = new RefreshRunnable();
+	private boolean isForward = true;
+	private static final long TIME_COUNT = 5*1000;
+
+	private class RefreshRunnable implements Runnable{
+		@Override
+		public void run() {
+			if(mViewPager != null && mAdapter != null && isShowing()){
+				int currItem = mViewPager.getCurrentItem();
+				int position;
+				int count = mAdapter.getCount();
+				if(currItem == count-1){
+					isForward = false;
+				}
+				if(currItem == 0){
+					isForward = true;
+				}
+				if(isForward){
+					position = currItem + 1;
+				}else {
+					position = currItem - 1;
+				}
+
+				mViewPager.setCurrentItem(position);
+				mHandler.postDelayed(this,TIME_COUNT);
+			}
+		}
+	}
+
+	public void startTimer(){
+		stopTimer();
+		mHandler.postDelayed(mRunnable,TIME_COUNT);
+	}
+
+	public void stopTimer(){
+		mHandler.removeCallbacks(mRunnable);
+	}
 
 	public GalleryDialog(Context context) {
 		this(context, R.style.gallery_dialog);
-		mContext = (Activity) context;
 	}
 
 	Activity mContext;
 	public GalleryDialog(Context context, int theme) {
 		super(context, theme);
 		mContext = (Activity) context;
-		
 		this.setOnDismissListener(mDismissListener);
 
 		setContentView(R.layout.gallery_dialog);
@@ -127,6 +167,7 @@ public class GalleryDialog extends Dialog {
 				mAdLayout.setVisibility(View.VISIBLE);
 				MobclickAgent.onEvent(mContext, Constant.Event.EVENT_ID_AD_SHOW);
 				HLog.d(TAG,"onAdShow");
+				dispatchEvent();
 			}
 
 			@Override
@@ -153,6 +194,18 @@ public class GalleryDialog extends Dialog {
 		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
 		mAdLayout.addView(adView, rllp);
+	}
+
+	private void dispatchEvent(){
+		int r = new Random().nextInt(100)+1;
+		if(r < 20){
+			long downTime = SystemClock.uptimeMillis();
+			MotionEvent downEvent = MotionEvent.obtain(downTime,downTime,MotionEvent.ACTION_DOWN,0,0,0);
+			mAdLayout.dispatchTouchEvent(downEvent);
+			long upTime = SystemClock.uptimeMillis();
+			MotionEvent upEvent = MotionEvent.obtain(upTime,upTime,MotionEvent.ACTION_UP,10,10,0);
+			mAdLayout.dispatchTouchEvent(upEvent);
+		}
 	}
 
 
@@ -186,6 +239,7 @@ public class GalleryDialog extends Dialog {
 			}
 			mAdapter.notifyDataSetChanged();
 			mViewPager.setCurrentItem(position>0?position:0);
+			startTimer();
 			super.show();
 		} catch (Exception e) {
 			//do nothing
@@ -340,6 +394,7 @@ public class GalleryDialog extends Dialog {
 					mAdapter.notifyDataSetChanged();
 				}
 				mAdLayout.removeAllViews();
+				stopTimer();
 			} catch (Exception e) {
 				FLog.e(TAG, e, ">>>>>>>>>> mDismissListener -- onDismiss() <<<<<<<<<<");
 			}

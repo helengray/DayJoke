@@ -35,6 +35,14 @@ public class JokePicAdapter extends BaseRecyclerAdapter<JokeEn>{
 
     private GalleryDialog mGalleryDialog;
 
+    public GalleryDialog getGalleryDialog() {
+        return mGalleryDialog;
+    }
+
+    public void setGalleryDialog(GalleryDialog galleryDialog) {
+        mGalleryDialog = galleryDialog;
+    }
+
     private View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
